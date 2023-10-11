@@ -1,6 +1,16 @@
+- [OCA-OCP COURSE](#oca-ocp-course)
+  * [Building Blocks](#building-blocks)
+    + [Major components of Java](#major-components-of-java)
+    + [Class Structure](#class-structure)
+    + [Classes and source files](#classes-and-source-files)
+    + [The main() method](#the-main-method)
+
+<a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
 
+<a name="building-blocks"></a>
 ## Building Blocks
+<a name="major-components-of-java"></a>
 ### Major components of Java
 
 - JDK - Java Development Kit
@@ -15,13 +25,14 @@
   - jar: java archive (packing files together)
   - javadoc: for documentation
 
-  
+
 - JRE - Java Runtime Environment
   - It's a subset in Java 1.8 and earlier
   - JRE allows the user to run Java applications (no compiler)
   - After Java 8, one just uses full JDK to run Java applications
 
 
+<a name="class-structure"></a>
 ### Class Structure
 
 - Classes
@@ -40,8 +51,8 @@
   - Fields hold the information about the state of an object or a class
   - Methods describe some action or operation on that state
     - methods are similar to functions in some older programming language
-  - Example: check the class found in -> app.section2.Student_002
-  
+  - Example: check the class found in -> `app.section2.Student_002`
+
 
 - Comments
   - Comments are used to make a code more readable
@@ -52,6 +63,7 @@
     - comment starting with /** (Javadoc)
 
 
+<a name="classes-and-source-files"></a>
 ### Classes and source files
 
 - It's a good practice to have each class in your own .java file
@@ -64,16 +76,52 @@
 
 // in file Student.java
 
-public class Student {}
+`public class Student {}`
 
 // in file Item.java
 
-public class Item {}
 
-class SomeOtherItem {}
+`public class Item {}`
+
+`class SomeOtherItem{}`
+
 
 // in file Customer.java
 
-public class Customer {}
+`public class Customer {}`
 
-public class Client {} // DOES NOT COMPILE, BECAUSE YOU CAN'T HAVE 2 PUBLIC CLASSES IN THE SAME FILE
+`public class Client {}` // DOES NOT COMPILE, BECAUSE YOU CAN'T HAVE 2 PUBLIC CLASSES IN THE SAME FILE
+
+
+<a name="the-main-method"></a>
+### The main() method
+
+- Java program starts by executing the main() method:
+
+  `public static void main(String[] args)` // most common
+
+  `public static void main(String[] someOtherSillyName)`
+
+  `public static void main(String args[])`
+
+  `public static void main(String... args)`
+
+  `public final static void main(final String[] args)`
+
+  `static public void main(String[] args)`
+
+
+  - Note: The return type must follow the name of the method!
+
+public: access modifier
+
+static: method belongs to the class (not to the instance)
+
+void: no return type
+
+main: name of the method
+
+String[] args: input parameters (array of Strings)
+
+  - Example of use args as input in main method: `app.section2.Names_004`
+
