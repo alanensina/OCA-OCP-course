@@ -4,6 +4,8 @@
     + [Class Structure](#class-structure)
     + [Classes and source files](#classes-and-source-files)
     + [The main() method](#the-main-method)
+    + [Packages](#packages)
+    + [Compile, Run and Archive Java files](#compile-run-and-archive-java-files)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -124,4 +126,66 @@ main: name of the method
 String[] args: input parameters (array of Strings)
 
   - Example of use args as input in main method: `app.section2.Names_004`
+
+<a name="packages"></a>
+### Packages
+- Java classes are stored in different packages
+- You can think of them as folders in which the classes are stored
+- In order to use a class, you must _import_ a package in your program
+- The package's name usually looks like something like this: `com.alanensina.javacourse`
+  - This means that there is a folder `com`, with a subfolder `alanensina`, with a subfolder `javacourse` containing classes
+- Check a simple example of import and package in: `app.section2.NumberGenerator_005`
+- There's an option to use a fully qualified name of class instead to import it: `java.util.Random randomNumber = new java.util.Random();` but is not common to use.
+- You can use wildcards to import all the classes in the package: `import java.util.*` but will not import the subpackages (subfolders)
+- Be careful about conflicts:
+  - `import java.util.Date`
+  - `import java.sql.Date` // DOES NOT COMPILE
+- If you want to use both there's a solution:
+  - `import java.util.Date`
+  - `import java.sql.*`
+    - And when you want the use the Date class from java.sql, you can use like this: `java.util.Date dateSQL = new java.util.Date();`
+
+<a name="compile-run-and-archive-java-files"></a>
+### Compile, Run and Archive Java files
+
+- Imagine a first class:
+  - `C:\com\udemy\ocppackage\Ocp.java` (Windows)
+  - `/com/udemy/ocppackage/Ocp.java` (*nix)
+- Imagine a second class:
+  - `C:\com\udemy\ocapackage\Oca.java` (Windows)
+  - `/com/udemy/ocapackage/Oca.java` (*nix)
+- Take the common-ground position:
+  - `cd C:\com\udemy` (Windows)
+  - `cd /com/udemy` (*nix)
+- To compile: `javac ocppackage/Ocp.java ocapackage/Oca.java`
+  - output: `.class files`
+  - compile alternative: `javac ocppackage/*.java ocapackage/*.java` All java files will be compiled
+- To run the OCP Application:
+  - `java ocppackage.Ocp` do not put .class, Java will look automatically to .class file.
+- If you want to compile from another directory: `javac -d classes ocppackage/Ocp.java ocapackage/Oca.java`, and a new folder called classes will be created with the .class files
+- There're other ways to run the Ocp Application:
+  - `java -cp classes ocppackage.Ocp`
+  - `java -classpath classes ocppackage.Ocp`
+  - `java --class-path classes ocppackage.Ocp`
+- If the application depends on other files to run:
+  - Some files are in package "deps" and other are in myJar.jar:
+    - `java -cp ".;C:\com\udemy\deps;C:\com\udemy\myJar.jar" myPackage.MyApp` (Windows)
+  - If you have many jars ina folder:
+    - `java -cp ".;C:\com\udemy\myjars\*" myPackage.MyApp` (Windows)
+- Create your own .jar file:
+  - `jar -cvf myNewJarFile.jar`
+  - `jar --create --verbose --file myNewJarFile.jar`
+  - `jar -cvf myNewJarFile.jar -C myFolder` (If you are located in a different folder)
+
+
+
+
+
+
+
+
+
+
+
+
 
