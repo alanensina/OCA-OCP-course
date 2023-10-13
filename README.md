@@ -6,6 +6,8 @@
     + [The main() method](#the-main-method)
     + [Packages](#packages)
     + [Compile, Run and Archive Java files](#compile-run-and-archive-java-files)
+    + [Objects](#objects)
+    + [Data types](#data-types)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -177,6 +179,103 @@ String[] args: input parameters (array of Strings)
   - `jar --create --verbose --file myNewJarFile.jar`
   - `jar -cvf myNewJarFile.jar -C myFolder` (If you are located in a different folder)
 
+<a name="objects"></a>
+### Objects
+- Object is an instance of the class
+- New object is created using a keyword `new`:
+  - `Student s = new Student();`
+- When an object is created, the `constructor` of the object is called
+- See an example: `app.section2.Student__007` and `app.section2.MyApp_007`
+- If the constructor wasn't provided, the compiler will generate a simple constructor without arguments: `public Student() {}`
+- But if you provide a constructor with arguments, the compiler WILL NOT generate a constructor without arguments.
+- Order of initialization:
+  - The code between two brackets {...} is called code block
+  - Instance initializer - code block outside the method
+  - Order of initialization:
+    - fields and instance initializer blocks in order which they appear
+    - constructor runs in the end
+    - Example in: `app.section2.Dog_007`
+
+<a name="data-types"></a>
+### Data types
+- **Primitive Types**:
+
+| Keyword |         Type          |     Min     |    Max     | Default | Example  |
+|:-------:|:---------------------:|:-----------:|:----------:|:-------:|:--------:|
+| boolean |      true/false       |      -      |     -      |  false  |  false   |
+|  byte   | 8 bit integral value  |    -128     |    127     |    0    |   112    |
+|  short  | 16 bit integral value |   -32768    |   32767    |    0    |   -200   |
+|   int   | 32 bit integral value | -2147483648 | 2174483647 |    0    |   4321   |
+|  long   | 64 bit integral value |    -2^63    |  2^63 -1   |   0L    |  1235L   |
+|  float  | 32 bit floating value |      -      |     -      |  0.0f   | 321.214f |
+| double  | 64 bit floating value |      -      |     -      |   0.0   | 3214.21  |
+|  char   | 16 bit Unicode value  |      0      |   65535    | \u0000  |   'c'    |
+
+- In Java, boolean true and false are completely unrelated to 1 and 0!
+- All numeric types are signed (allow negative numbers)
+- float requires f (or F) at the end:
+  - `float x = 2.7;` // DOES NOT COMPILE
+  - `float x = 2.7f;` // OK
+- long requires l (or and preferably L) at the end:
+  - `long y = 34243472;` // DOES NOT COMPILE
+  - `long y = 34243472L;` // OK
+- bit size of boolean is not specified (depends on JVM)
+
+
+- **Supported digital formats**:
+  - base 10 (digits 0-9), "normal" numbers
+  - octal (digits 0-7), uses 0 as a prefix: `019`
+  - hexadecimal (digits 0-9 and letters A-F/a-f), uses 0x or 0X as a prefix:
+    - format is case insensitive: `0xFF, 0XFF, 0xff, etc...`
+  - binary (digits 0 and 1), uses 0b or 0B as prefix: `0b19, 0B10, etc...`
+
+
+- For readability, Java allows _ , but not in the beginning: 
+  - `int a = 1_000_000;` // normal usage: 1000000
+  - `int b = 1_2;` // OK, but not very useful: 12
+  - `int c = 1____4;` // OK, but not very useful: 14
+  - `double d = 1_000_000.000_001;` // OK, useful: 1000000.000001
+  - `double e = _10.1;` // DOES NOT COMPILE
+  - `double e = 10.1_;` // DOES NOT COMPILE
+  - `double e = 10_.1;` // DOES NOT COMPILE
+  - `double e = 10._1;` // DOES NOT COMPILE
+  
+
+- **Wrapper Classes**:
+  - Primitives are not objects, and sometimes we prefer to work with objects
+  - Each primitive has a wrapper class
+    - an object type which corresponds to the primitive
+  - Most common way to create an object from the primitive:
+    - use _static method_: `valueOf()`:
+    - `Integer a = Integer.valueOf(3);`
+
+| Primitive type | Wrapper class |          Example           |   
+|:--------------:|:-------------:|:--------------------------:|
+|    boolean     |    Boolean    |   Boolean.valueOf(true);   | 
+|      byte      |     Byte      |  Byte.valueOf((byte) 4);   |
+|     short      |     Short     | Short.valueOf((short) 11); | 
+|      int       |    Integer    |    Integer.valueOf(19);    | 
+|      long      |     Long      |     Long.valueOf(15L);     |  
+|     float      |     Float     |   Float.valueOf(12.7f);    |  
+|     double     |    Double     |   Double.valueOf(12.5);    | 
+|      char      |   Character   |  Character.valueOf('a');   |   
+
+- valueOf() can be used to convert String into wrapper class:
+  - `Integer n = Integer.valueOf("11");`
+- Useful methods:
+  - `int m = Integer.parseInt("1");` // Converts a String into a primitive int
+  - `Double d = Double.valueOf(314.67);` // Create an object Double
+  - `System.out.println(d.byteValue(d));` // Print 58, because wrap: 314(rounded) - 256(byte value range) = 58
+- Before Java 9, this was possible (might appear on OCA exam):
+  - `Integer x = new Integer(15);`
+
+
+- **Strings**:
+  - Strings `e.g. "Hello World"` are not primitive types in Java
+  - But they are commonly used like primitives:
+    - `String greetings = "Hello";`
+    - `String name = "Alan";`
+    - `System.out.println(greetings + ", " + name + "!");` // Hello, Alan!
 
 
 
