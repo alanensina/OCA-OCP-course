@@ -8,6 +8,8 @@
     + [Compile, Run and Archive Java files](#compile-run-and-archive-java-files)
     + [Objects](#objects)
     + [Data types](#data-types)
+    + [Text blocks](#text-blocks)
+    + [Variables](#variables)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -278,10 +280,65 @@ String[] args: input parameters (array of Strings)
     - `System.out.println(greetings + ", " + name + "!");` // Hello, Alan!
 
 
+<a name="text-blocks"></a>
+### Text blocks
+
+- Introduced as standard in Java 15:
+  - `String title = """ 
+"Java SE 17 Developer Course" 
+  by Alan Ensina """;`
+  - The old way:
+    - `String title = "\"Java SE 17 Developer Course\"\n   by Alan Ensina";`
 
 
+<a name="variables"></a>
+### Variables
 
-
+- Variable is a name for a piece of memory which stores data
+- To declare a variable means to state a variable type and give it a name: `int x;`
+- To initialize a variable means to give a variable a value: `int x = 5;`
+- Name of the variable (method, class, interface, package...) is called identifier
+- **Identifier rules**
+  - Must begin with a letter, currency symbol ($, £), or underscore (_)
+  - Can include numbers, but not start with a number
+  - Single underscore (_) is not allowed as an identifier
+  - You cannot use a reserved word
+    - Examples:
+      - `$myVAR12`
+      - `_£name_`
+      - `_someName1$`
+      - `BIG_NAME`
+      - `_12X`
+      - `myVariable`
+- Reserved words
+  - Check all the keywords that are reserved in: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html
+- Naming conventions
+  - Variables use camelCase
+  - Constants use SNAKE_CASE
+  - Identifiers of classes, interfaces, enums records stats with first uppercase letter:
+    - `MyClass, MyInterface, StudentRecord`
+  - Identifiers of variables and methods start with first lowercase letter:
+    - `fullName, getFullName()`
+  - Multiple variables can be declared and/or initialized in a single line, but **it's a bad practice**, but it compiles:
+    - `int x, y;`
+    - `String name = "Alan", lastname = "Ensina";`
+    - `boolean v = true, w, z = false;`
+  - You can't declare variables of different type in a single line/command:
+    - `int x, String name;` // DOES NOT COMPILE
+- Scope of variables
+  - Variables can go out of scope ("cease to exist")
+  - local variables: exists only within the block of code {...}
+    - must be initialized before use or will not be compiled if you try to use the variable
+  - instance variables (fields): defined within the specific instance of the object 
+  - class variables - belong to a class and is shared with all instances of the class
+    - marked with keyword _static_
+    - instance and class variables don't require initialization
+      - assume the default values of their type
+- Final variables (constants)
+  - `final int MAX_HEIGHT = 100;`
+  - `final int[] MY_NUMBERS = new int[5];` // applied to a reference, you can change the content
+    - `MY_NUMBERS[2] = 13;` // OK
+    - `MY_NUMBERS = null;` // DOES NOT COMPILE
 
 
 
