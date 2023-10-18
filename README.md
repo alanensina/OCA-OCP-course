@@ -10,6 +10,10 @@
     + [Data types](#data-types)
     + [Text blocks](#text-blocks)
     + [Variables](#variables)
+    + [Local Variable Type Inference (LVTI)](#local-variable-type-inference-lvti)
+    + [Garbage Collector](#garbage-collector)
+  * [Operators](#operators)
+    * [Operators in Java](#operators-in-java)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -340,8 +344,52 @@ String[] args: input parameters (array of Strings)
     - `MY_NUMBERS[2] = 13;` // OK
     - `MY_NUMBERS = null;` // DOES NOT COMPILE
 
+<a name="local-variable-type-inference"></a>
+### Local variable Type Inference (LVTI)
 
+- Introduced in Java 10
+- Local variable - can be used only with local variables
+- Type inference - type of the variables are inferred by the compiler
+  - `var a = 5;`
+- In the example above, the _a_ variable was inferred as type _int_
+  - It's not possible to change the type after the inference:
+    - `a = "Alan Ensina";` // DOES NOT COMPILE
+- You can't assign var variable as null;
+  - `var a = null;` // DOES NOT COMPILE
+- _var_ is not a reserved word
+  - `public class Var{}` // OK
+  - `var var = 5;` // OK
+  - `var var = new Var();` // OK
+- **Used only in local variables!**
+- Practical usage:
+  - `SomeClassWithAVeryLongName instance = new SomeClassWithAVeryLongName();` // old way
+  - `var instance = new SomeClassWithAVeryLongName();` // new way
+  - `ArrayList<Client> clientList = new SomeClassWithAVeryLongName().getCLientList();` // old way
+  - `var clientList = new SomeClassWithAVeryLongName().getCLientList();` // new way
 
+<a name="garbage-collector"></a>
+### Garbage collector
 
+- All Java Objects are stored in program's **memory heap** (a.k.a free store)
+- Garbage collection is a process of automatically freeing memory on the heap
+  - by removing objects which are no longer reachable in the program
+- The object is said to be eligible for garbage collection
+- Once the object is eligible for GC Java can remove it from heap (and free memory)
+- This process is out of your control
+  - You cannot know if and when the memory will be freed
+- There's a method that can suggest Java to clean the heap: `System.gc();`
+  - But it's not guaranteed to do anything.
+- **Eligibility for Garbage Collection**
+  - Object is eligible for GC once it is no longer reachable by the program
+    - The object has no reference pointing to it
+    - All references of the object have gone out of scope
+  - In other words, when the objects "hangs in the air"
+- Check an example in: `app.section2.GCExample_012`
 
+<a name="operators"></a>
+## Operators
 
+<a name="operators-in-java"></a>
+### Operators in Java
+
+- 
