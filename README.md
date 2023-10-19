@@ -14,6 +14,7 @@
     + [Garbage Collector](#garbage-collector)
   * [Operators](#operators)
     * [Operators in Java](#operators-in-java)
+    * [Unary operators](#unary-operators)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -392,4 +393,48 @@ String[] args: input parameters (array of Strings)
 <a name="operators-in-java"></a>
 ### Operators in Java
 
-- 
+- Check the example: `int x = a + b;`
+  - 'int' = type
+  - 'x' is variable of the result
+  - 'a' and 'b' are variables and OPERANDS
+  - '+' is the operator
+- Types of operators
+  - Unary operator: `a++;`
+  - Binary operator: `a = b + c;`
+  - Ternary operator: `a = b > 0 ? 1 : 2;`
+- Operator precedence
+  - Like in math, the operators have some precedence, check the operators precedence in Java in the link below
+    - https://www.cs.bilkent.edu.tr/~guvenir/courses/CS101/op_precedence.html
+  - Example: `int a = 2+2*2+10/5+1;`
+    - In this case, it's easier to see the precedence using parentesis: `a = 2 + (2*2) + (10/5) + 1;`
+      - `a = 9;`
+  - Example: `boolean b = 2>1&&2+2*2==5;`
+    - In this case, it's easier to see the precedence using parentesis: `b = (2>1) && (( 2 + (2*2)) == 5);`
+      - `b = true && (6 == 5) = true && false =  false`
+  - Example: 
+    - `int x = 1;`
+    - `int y = ++x*2;`
+      - `y = (++x) * 2;`
+        - `y = 4 , x = 2`
+
+<a name="unary-operators"></a>
+### Unary operators
+  
+- Requires only one operand
+
+|      Operator      | Example  |
+|:------------------:|:--------:|
+| Logical complement |    !b    |
+| Bitwise complement |    ~a    |
+|        Plus        |    +c    |
+|  Negation(minus)   |    -s    |
+|     Increment      | ++g, g-- |
+|     Decrement      | --a, a-- |
+|        Cast        | (int) a  |
+
+- Increment and decrement operators
+  - `++a` increases value by 1 and returns a NEW value
+  - `a++` increases value by 1 and returns a OLD value
+  - `--a` decreases value by 1 and returns a NEW value
+  - `a--` decreases value by 1 and returns a OLD value
+  - Example in: `app.section3.IncrementAndDecrement_014`
