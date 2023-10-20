@@ -15,6 +15,8 @@
   * [Operators](#operators)
     * [Operators in Java](#operators-in-java)
     * [Unary operators](#unary-operators)
+    * [Binary operators](#binary-operators)
+    * [Assignment operator](#assignment-operator)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -438,3 +440,67 @@ String[] args: input parameters (array of Strings)
   - `--a` decreases value by 1 and returns a NEW value
   - `a--` decreases value by 1 and returns a OLD value
   - Example in: `app.section3.IncrementAndDecrement_014`
+
+
+<a name="binary-operators"></a>
+### Binary operators
+
+- Arithmetic binary operators:
+  - addition: `a + b`
+  - subtraction: `c - d`
+  - multiplication: `e * f`
+  - division: `g / h`
+    - `int a = 11 / 4;` // a = 2 (FLOOR VALUE)
+  - modulo operator: `i % j`
+    - `int b = 11 % 4;` // b = 3 (reminder of division)
+    - `String c = (n % 2 == 0) ? "even" : "odd";`
+- Rules of numeric promotion:
+  - If operands have different data types, Java automatically promotes one of the operands to a larger of two data types
+  - If one value is integer, and  another is decimal, Java promotes int to decimal
+  - byte, short and char are **always** first promoted to int before the operations is done
+  - The result value has the same data type as the promoted operands
+  - See example in: `app.section3.RulesOfNumericPromotion_015`
+
+
+<a name="assignment-operator"></a>
+### Assignment operator
+
+- Assignment operator (`=`) has the lowest precedence
+  - `a = b - c;`
+- First the operation on the right-hand side is performed
+  - the result is assigned to a variable on the left-hand side
+- auto casting: Java automatically promotes smaller to larger data type:
+  - `short x = 5;`
+  - `int y;`
+  - `y = x;` // OK, x is casted to int
+  - `int z = 15;`
+  - `short s;`
+  - `s = z;` // NOK! you can't put int into short
+  - `s = (short) z;` // OK
+  - More examples:
+  - `int x = 1.0;` // NOK
+  - `int Y = 123l;` // NOK
+  - `long z = 5;` // OK
+  - `long w = (byte) 7;` // OK
+  - `float k = 2.3;` // NOK
+  - `float l = 2.3f;` // OK
+  - `double m = 2.5f;` // OK
+  - `double n = 3.14;` // OK
+  - `float pi = n;` // NOK
+  - `short a = 7;` // OK
+  - `short b = 5;` // OK
+  - `short c = (short) (a + b);` // OK
+- Compound assign operators:
+  - `a += 5;`
+    - `a = a + 5;`
+  - `a -= 5;`
+    - `a = a - 5;`
+  - `a *= 5;`
+    - `a = a * 5;`
+  - `a /= 5;`
+    - `a = a / 5;`
+- Return value of assignment operator
+  - expression `a = 2` does two things 
+    - assign value 2 to variable a
+    - returns value 2
+  - Check the example in: `app.section3.AssignmentOperator_016`
