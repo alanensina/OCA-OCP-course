@@ -17,6 +17,7 @@
     * [Unary operators](#unary-operators)
     * [Binary operators](#binary-operators)
     * [Assignment operator](#assignment-operator)
+    * [Comparison operator](#comparison-operator)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -504,3 +505,41 @@ String[] args: input parameters (array of Strings)
     - assign value 2 to variable a
     - returns value 2
   - Check the example in: `app.section3.AssignmentOperator_016`
+
+
+<a name="comparison-operator"></a>
+### Comparison operator
+
+- Always return a boolean value (`true` or `false`)
+- Equals operator (`a == b`)
+  - primitives:
+    - returns `true` if values are the same
+  - objects:
+    - returns `true` if both objects reference to the same object
+- Not-Equals operator (`a != b`) WORKS IN THE SAME WAY
+  - primitives:
+    - returns `false` if values are the same
+  - objects:
+    - returns `false` if both objects reference to the same object 
+- You can only compare values or similar type (auto-casting applies)
+- Relational operators: `>`, `>=`, `<`, `<=`, `instanceof`
+  - Check example: `app.section3.ComparisonOperators_017`
+- Logical operators:
+  - AND: `a & b`
+    - `true` if at least one operands is true
+  - OR: `a | b`
+    -  `true` if at least one is true
+  - XOR: `a ^ b`
+    -  `true` if one operands is true and another is false
+- Conditional operators:
+- AND: `a && b`
+  - `true` if at least both operands is true
+- OR: `a || b`
+  -  `true` if at least one is true
+- What is the difference between logical and conditional operators?
+  - Conditional evaluation stops once the result can be determined
+  - This property is known as short-circuit
+- Ternary operator also has short-circuit property
+  - Example: (a=5, b= 10, c=15)
+    - `int d = (a < b) ? 7 : ++c;`
+      - ++c will never be evaluated
