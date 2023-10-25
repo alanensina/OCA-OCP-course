@@ -1,23 +1,26 @@
 - [OCA-OCP COURSE](#oca-ocp-course)
-  * [Building Blocks](#building-blocks)
+  * [Building blocks](#building-blocks)
     + [Major components of Java](#major-components-of-java)
-    + [Class Structure](#class-structure)
+    + [Class structure](#class-structure)
     + [Classes and source files](#classes-and-source-files)
     + [The main() method](#the-main-method)
     + [Packages](#packages)
-    + [Compile, Run and Archive Java files](#compile-run-and-archive-java-files)
+    + [Compile, run and archive Java files](#compile-run-and-archive-java-files)
     + [Objects](#objects)
     + [Data types](#data-types)
     + [Text blocks](#text-blocks)
     + [Variables](#variables)
-    + [Local Variable Type Inference (LVTI)](#local-variable-type-inference-lvti)
-    + [Garbage Collector](#garbage-collector)
+    + [Local variable type inference (LVTI)](#local-variable-type-inference-lvti)
+    + [Garbage collector](#garbage-collector)
   * [Operators](#operators)
     * [Operators in Java](#operators-in-java)
     * [Unary operators](#unary-operators)
     * [Binary operators](#binary-operators)
     * [Assignment operator](#assignment-operator)
     * [Comparison operator](#comparison-operator)
+  * [Flow control](#flow-control)
+    * [If/Else statement](#ifelse-statement)
+    * [Switch statement](#switch-statement)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -543,3 +546,29 @@ String[] args: input parameters (array of Strings)
   - Example: (a=5, b= 10, c=15)
     - `int d = (a < b) ? 7 : ++c;`
       - ++c will never be evaluated
+
+
+<a name="flow-control"></a>
+## Flow control
+
+
+<a name="ifelse-statement"></a>
+### If/Else statement
+
+- The syntax of if/else
+  - `if(expression1){` // expression1 must be a boolean expression
+    - //block of code executed if the expression1 is true
+  - `}else if(expression2){` // expression2 must be a boolean expression
+    - //block of code executed if expression1 is false and expression2 is true
+  - `}else{`
+    - //block of code executed only if expression1 and expression2 is false
+  - `}` 
+- Check an example in: `app.section4.IfElseStatement_018`
+
+
+<a name="switch-statement"></a>
+### Switch statement
+
+- Check the syntax in: `app.section4.SwitchStatement_019`
+- Allowed variable types: int (Integer), byte (Byte), short (Short), char (Character), String and enum type
+- Not allowed variables: boolean, long, float and double
