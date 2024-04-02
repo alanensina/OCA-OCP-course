@@ -21,6 +21,10 @@
   * [Flow control](#flow-control)
     * [If/Else statement](#ifelse-statement)
     * [Switch statement](#switch-statement)
+    * [While loop](#while-loop)
+    * [Do/While loop](#dowhile-loop)
+    * [For loop](#for-loop)
+    * [For-each loop](#for-each-loop)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -572,3 +576,39 @@ String[] args: input parameters (array of Strings)
 - Check the syntax in: `app.section4.SwitchStatement_019`
 - Allowed variable types: int (Integer), byte (Byte), short (Short), char (Character), String and enum type
 - Not allowed variables: boolean, long, float and double
+
+<a name="while-loop"></a>
+### While Loop
+
+- Check the syntax in: `app.section4.WhileLoop_021`
+- You can use a `break` statement if you want to break the loop
+- Also, you can use `labels` to define the loops
+- The `continue` keyword can be used to define a next iteration of the loop
+- The `return` keyword can be used and works like `break`, but will finish the loop and the method
+
+<a name="dowhile-loop"></a>
+### Do/While loop
+- The main difference compared to while loop is that a block of code will be executed at least once
+- Check the syntax in: `app.section4.DoWhileLoop_022`
+- You can use `break`, `continue`, `return`, nested loops, unreachable code, etc, just like a normal while loop
+
+<a name="for-loop"></a>
+### For loop
+- The syntax of for loop: `for(initialization; condition; update){}`
+- Order of the execution
+  1) execute initialization statement (only once)
+  2) check the condition
+  3) if condition is true, execute the code block, otherwise exit the loop
+  4) execute the update statement
+  5) repeat step 2
+- It's possible to omit any one of the statements, but you still have to keep the `;` in place
+- Example of infinite loop: `for ( ; ; ){ }`
+- You can use more than one index in a for loop separated by coma
+- You can use `break`, `continue`, `return`, nested loops, unreachable code, etc, just like a normal while loop
+- Check the syntax in: `app.section4.ForLoop_023`
+
+<a name="for-each-loop"></a>
+### For-each loop
+- For loop is often used to access members of an array (or collection)
+- Check the syntax in: `app.section4.ForEachLoop_024`
+- In Java 17 for-each loop is often used with LVTI
