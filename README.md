@@ -25,6 +25,11 @@
     * [Do/While loop](#dowhile-loop)
     * [For loop](#for-loop)
     * [For-each loop](#for-each-loop)
+  * [Strings](#strings)
+    * [String methods](#string-methods)
+    * [StringBuilder](#stringbuilder)
+    * [String Pool](#string-pool)
+  
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -612,3 +617,35 @@ String[] args: input parameters (array of Strings)
 - For loop is often used to access members of an array (or collection)
 - Check the syntax in: `app.section4.ForEachLoop_024`
 - In Java 17 for-each loop is often used with LVTI
+
+<a name="strings"></a>
+## Strings
+  - Create and concatenate a String
+  - String is a sequence of characters, implementing `CharSequence` interface
+  - Ways to assign a String:
+    - `String name = "Alan";`
+    - `String name = new String("Alan");`
+  - Concatenation: put two or more String as one:
+    - `string1 + string2` or `string1.concat(string2)`;
+- Concatenation examples in: `app.section5.StringConcatenation_025`
+
+<a name="string-methods"></a>
+### String methods
+  - Examples in: `app.section5.StringMethods_025`
+  - `length()` - length of the String
+  - `charAt(index)` - Get the char located in the index, if the index doesn't exists, a StringIndexOutOfBoundsException
+  - `indexOf(char)` - It will return the index of a char in the String in his FIRST APPEARANCE
+  - `substring(index)` - creates a new String from an index till the end of the String, the char of the index will be included
+  - `toLowerCase()` - Put all characters in lower case
+  - `toUpperCase()` - Put all characters in upper case
+  - `equals()` -  compare the content if is the same
+  - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case sensitive
+
+
+
+
+<a name="stringbuilder"></a>
+### StringBuilder
+
+<a name="string-pool"></a>
+### String Pool
