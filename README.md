@@ -538,7 +538,7 @@ String[] args: input parameters (array of Strings)
   - Check example: `app.section3.ComparisonOperators_017`
 - Logical operators:
   - AND: `a & b`
-    - `true` if at least one operands is true
+    - `true` if at least one operand is true
   - OR: `a | b`
     -  `true` if at least one is true
   - XOR: `a ^ b`
@@ -632,17 +632,28 @@ String[] args: input parameters (array of Strings)
 <a name="string-methods"></a>
 ### String methods
   - Examples in: `app.section5.StringMethods_025`
-  - `length()` - length of the String
-  - `charAt(index)` - Get the char located in the index, if the index doesn't exists, a StringIndexOutOfBoundsException
+  - `length()` - Length of the String
+  - `charAt(index)` - Get the char located in the index, if the index doesn't exist, a StringIndexOutOfBoundsException
   - `indexOf(char)` - It will return the index of a char in the String in his FIRST APPEARANCE
-  - `substring(index)` - creates a new String from an index till the end of the String, the char of the index will be included
+  - `substring(index)` - Creates a new String from an index till the end of the String, the char of the index will be included
   - `toLowerCase()` - Put all characters in lower case
   - `toUpperCase()` - Put all characters in upper case
-  - `equals()` -  compare the content if is the same
-  - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case sensitive
-
-
-
+  - `equals()` -  Compare the content if is the same
+  - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case-sensitive
+  - `startsWith()` - Compare the start of the String and return a boolean value
+  - `endsWith()` - Compare the end of the String and return a boolean value
+  - `contains()` - Verify if the String contains a substring and return a boolean value
+  - `replace()` - Replace a char/String to another char/String into the String
+  - `strip()` - Remove the whitespaces from beginning and end of the String
+  - `trim()` - Same as strip, but supports Unicode
+  - `stripLeading()` - Remove the whitespaces ONLY in the beginning of the String
+  - `stripTrailing()` - Remove the whitespaces ONLY in the end of the String
+    - **Whitespaces** also includes \t (tab), \n (new line), \r (carriage return). All escape sequences count as one character in length
+  - `indent(n)` -add or remove whitespaces characters from beginning of the string
+  - `stripIndent()` - removes all leading incidental whitespaces
+  - `translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
+  - `isEmpty()` - Returns a boolean if the String is empty, But if the String has at least one whitespace, it will not consider an empty String
+  - `isBlank()` - Returns a boolean if the String is empty, even with whitespace.
 
 <a name="stringbuilder"></a>
 ### StringBuilder
