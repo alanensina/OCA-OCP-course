@@ -628,35 +628,59 @@ String[] args: input parameters (array of Strings)
   - Concatenation: put two or more String as one:
     - `string1 + string2` or `string1.concat(string2)`;
 - Concatenation examples in: `app.section5.StringConcatenation_025`
+- _**String are immutable!**_
 
 <a name="string-methods"></a>
 ### String methods
   - Examples in: `app.section5.StringMethods_025`
-  - `length()` - Length of the String
-  - `charAt(index)` - Get the char located in the index, if the index doesn't exist, a StringIndexOutOfBoundsException
-  - `indexOf(char)` - It will return the index of a char in the String in his FIRST APPEARANCE
-  - `substring(index)` - Creates a new String from an index till the end of the String, the char of the index will be included
-  - `toLowerCase()` - Put all characters in lower case
-  - `toUpperCase()` - Put all characters in upper case
-  - `equals()` -  Compare the content if is the same
-  - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case-sensitive
-  - `startsWith()` - Compare the start of the String and return a boolean value
-  - `endsWith()` - Compare the end of the String and return a boolean value
-  - `contains()` - Verify if the String contains a substring and return a boolean value
-  - `replace()` - Replace a char/String to another char/String into the String
-  - `strip()` - Remove the whitespaces from beginning and end of the String
-  - `trim()` - Same as strip, but supports Unicode
-  - `stripLeading()` - Remove the whitespaces ONLY in the beginning of the String
-  - `stripTrailing()` - Remove the whitespaces ONLY in the end of the String
-    - **Whitespaces** also includes \t (tab), \n (new line), \r (carriage return). All escape sequences count as one character in length
-  - `indent(n)` -add or remove whitespaces characters from beginning of the string
-  - `stripIndent()` - removes all leading incidental whitespaces
-  - `translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
-  - `isEmpty()` - Returns a boolean if the String is empty, But if the String has at least one whitespace, it will not consider an empty String
-  - `isBlank()` - Returns a boolean if the String is empty, even with whitespace.
+    - `length()` - Length of the String
+    - `charAt(index)` - Get the char located in the index, if the index doesn't exist, a StringIndexOutOfBoundsException
+    - `indexOf(char)` - It will return the index of a char in the String in his FIRST APPEARANCE
+    - `substring(index)` - Creates a new String from an index till the end of the String, the char of the index will be included
+    - `toLowerCase()` - Put all characters in lower case
+    - `toUpperCase()` - Put all characters in upper case
+    - `equals()` -  Compare the content if is the same
+    - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case-sensitive
+    - `startsWith()` - Compare the start of the String and return a boolean value
+    - `endsWith()` - Compare the end of the String and return a boolean value
+    - `contains()` - Verify if the String contains a substring and return a boolean value
+    - `replace()` - Replace a char/String to another char/String into the String
+    - `strip()` - Remove the whitespaces from beginning and end of the String
+    - `trim()` - Same as strip, but supports Unicode
+    - `stripLeading()` - Remove the whitespaces ONLY in the beginning of the String
+    - `stripTrailing()` - Remove the whitespaces ONLY in the end of the String
+      - **Whitespaces** also includes \t (tab), \n (new line), \r (carriage return). All escape sequences count as one character in length
+    - `indent(n)` -add or remove whitespaces characters from beginning of the string
+    - `stripIndent()` - removes all leading incidental whitespaces
+    - `translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
+    - `isEmpty()` - Returns a boolean if the String is empty, But if the String has at least one whitespace, it will not consider an empty String
+    - `isBlank()` - Returns a boolean if the String is empty, even with whitespace.
+    - `format()` - Used to use symbols to express variables (Example %s , %d ...)
+    - `formatted()` - Used to use symbols to express variables (Example %s , %d ...)
+  - String formatting symbos
+    - `%s` - for any type, usually for String
+    - `%d` - for integral values (int and long)
+    - `%f` - for decimal numbers (float and double)
+    - `%n` - inserts a system-dependent line separator
 
 <a name="stringbuilder"></a>
 ### StringBuilder
+  - StringBuilder is a **mutable** class which contains a String
+    - It has many useful methods for manipulating the String
+      - Syntax: `Stringbuilder name = new StringBuilder("Alan");`
+    - Examples in: `app.section5.StringBuilder_026`
+    - Some methods work in the identical way as with a normal String
+        - `substring()`, `indexOf()`, `length()` and `charAt()`
+    - StringBuilder methods:
+        - `append()` - As far as the StringBuilder is mutable, you don't need to assign a new String to change, works like concatenation
+        - `insert()` - Insert a substring into the index defined, chaining can be applied
+        - `delete()` - Removes a characters from an index (inclusive) to another index (exclusive)
+        - `deleteCharAt()` - Removes a character from an index
+        - `replace(start, end, text)` - Remove characters from start to and end (excluded) and inserts a new String. Note the different syntax that is found on String method replace(). If the end index is too large, replace goes through the end of the String (NO EXCEPTION)
+        - `reverse()` - Reverse the String
+        - `toString()` - return a String object from StringBuilder
+        - `substring()` - returns a String and doesn't change the StringBuilder
+      - StringBuilder doesn't implement equals() method! If you want to compare the content, convert it back to String
 
 <a name="string-pool"></a>
 ### String Pool

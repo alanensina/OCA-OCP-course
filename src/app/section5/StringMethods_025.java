@@ -17,11 +17,9 @@ public class StringMethods_025 {
         indentandStripIndentExample();
         translateEscapesExample();
         isBlankAndIsEmptyExample();
-
+        formattingSymbolsExamples();
+        stringsAreImmutableExample();
     }
-
-
-
 
     private static void lengthExample() {
         String name = "Alan";
@@ -209,12 +207,27 @@ Bruce
         System.out.println("  ".isBlank()); // true
     }
 
+    private static void formattingSymbolsExamples() {
+        // format() - Used to use symbols to express variables (Example %s , %d ...)
+        // formatted() - Used to use symbols to express variables (Example %s , %d ...)
 
+        String name = "John";
+        int numberOfMarbles = 5;
 
+        String print = String.format("%s has %d marbles.", name, numberOfMarbles);
+        System.out.println(print);
+        String print2 = "%s has %d marbles.".formatted(name, numberOfMarbles);
+        System.out.println(print2);
+    }
 
+    private static void stringsAreImmutableExample() {
+        // String are immutable!
 
+        String name = "Alan";
+        name.toUpperCase();
+        System.out.println(name); // "Alan" (because Strings are immutable)
 
-
-
-
+        name = name.toUpperCase(); // you have to reassign the new value or create a new String
+        System.out.println(name); // "ALAN"
+    }
 }
