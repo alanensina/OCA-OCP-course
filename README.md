@@ -29,7 +29,10 @@
     * [String methods](#string-methods)
     * [StringBuilder](#stringbuilder)
     * [String Pool](#string-pool)
-  
+  * [Arrays](#arrays)
+    * [Creating an Array](#creating-an-array)
+    * [Sorting, Searching & Comparing Arrays](#sorting-searching--comparing-arrays)
+    * [Multidimensional Arrays](#multidimensional-arrays)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -44,19 +47,16 @@
     - OCA: 1.8
     - OCP: 17
 
-
 - Key commands:
   - javac: converts .java source files into .class bytecode
   - java: execute a program
   - jar: java archive (packing files together)
   - javadoc: for documentation
 
-
 - JRE - Java Runtime Environment
   - It's a subset in Java 1.8 and earlier
   - JRE allows the user to run Java applications (no compiler)
   - After Java 8, one just uses full JDK to run Java applications
-
 
 <a name="class-structure"></a>
 ### Class Structure
@@ -69,7 +69,6 @@
   - Object is a single representation of the class, also called instance of a class
   - A reference is a variable that points to an object
 
-
 - Fields and Methods
   - Two main elements (members) of Java class are fields and methods
   - Fields are sometimes referred to variables
@@ -79,7 +78,6 @@
     - methods are similar to functions in some older programming language
   - Example: check the class found in -> `app.section2.Student_002`
 
-
 - Comments
   - Comments are used to make a code more readable
     - They are ignored by the compiler
@@ -87,7 +85,6 @@
     - comment until the end of the line: //
     - comment everything within /* and */
     - comment starting with /** (Javadoc)
-
 
 <a name="classes-and-source-files"></a>
 ### Classes and source files
@@ -106,18 +103,15 @@
 
 // in file Item.java
 
-
 `public class Item {}`
 
 `class SomeOtherItem{}`
-
 
 // in file Customer.java
 
 `public class Customer {}`
 
 `public class Client {}` // DOES NOT COMPILE, BECAUSE YOU CAN'T HAVE 2 PUBLIC CLASSES IN THE SAME FILE
-
 
 <a name="the-main-method"></a>
 ### The main() method
@@ -135,7 +129,6 @@
   `public final static void main(final String[] args)`
 
   `static public void main(String[] args)`
-
 
   - Note: The return type must follow the name of the method!
 
@@ -243,14 +236,12 @@ String[] args: input parameters (array of Strings)
   - `long y = 34243472L;` // OK
 - bit size of boolean is not specified (depends on JVM)
 
-
 - **Supported digital formats**:
   - base 10 (digits 0-9), "normal" numbers
   - octal (digits 0-7), uses 0 as a prefix: `019`
   - hexadecimal (digits 0-9 and letters A-F/a-f), uses 0x or 0X as a prefix:
     - format is case insensitive: `0xFF, 0XFF, 0xff, etc...`
   - binary (digits 0 and 1), uses 0b or 0B as prefix: `0b19, 0B10, etc...`
-
 
 - For readability, Java allows _ , but not in the beginning: 
   - `int a = 1_000_000;` // normal usage: 1000000
@@ -262,7 +253,6 @@ String[] args: input parameters (array of Strings)
   - `double e = 10_.1;` // DOES NOT COMPILE
   - `double e = 10._1;` // DOES NOT COMPILE
   
-
 - **Wrapper Classes**:
   - Primitives are not objects, and sometimes we prefer to work with objects
   - Each primitive has a wrapper class
@@ -291,14 +281,12 @@ String[] args: input parameters (array of Strings)
 - Before Java 9, this was possible (might appear on OCA exam):
   - `Integer x = new Integer(15);`
 
-
 - **Strings**:
   - Strings `e.g. "Hello World"` are not primitive types in Java
   - But they are commonly used like primitives:
     - `String greetings = "Hello";`
     - `String name = "Alan";`
     - `System.out.println(greetings + ", " + name + "!");` // Hello, Alan!
-
 
 <a name="text-blocks"></a>
 ### Text blocks
@@ -309,7 +297,6 @@ String[] args: input parameters (array of Strings)
   by Alan Ensina """;`
   - The old way:
     - `String title = "\"Java SE 17 Developer Course\"\n   by Alan Ensina";`
-
 
 <a name="variables"></a>
 ### Variables
@@ -454,7 +441,6 @@ String[] args: input parameters (array of Strings)
   - `a--` decreases value by 1 and returns a OLD value
   - Example in: `app.section3.IncrementAndDecrement_014`
 
-
 <a name="binary-operators"></a>
 ### Binary operators
 
@@ -473,7 +459,6 @@ String[] args: input parameters (array of Strings)
   - byte, short and char are **always** first promoted to int before the operations is done
   - The result value has the same data type as the promoted operands
   - See example in: `app.section3.RulesOfNumericPromotion_015`
-
 
 <a name="assignment-operator"></a>
 ### Assignment operator
@@ -518,7 +503,6 @@ String[] args: input parameters (array of Strings)
     - returns value 2
   - Check the example in: `app.section3.AssignmentOperator_016`
 
-
 <a name="comparison-operator"></a>
 ### Comparison operator
 
@@ -556,10 +540,8 @@ String[] args: input parameters (array of Strings)
     - `int d = (a < b) ? 7 : ++c;`
       - ++c will never be evaluated
 
-
 <a name="flow-control"></a>
 ## Flow control
-
 
 <a name="ifelse-statement"></a>
 ### If/Else statement
@@ -573,7 +555,6 @@ String[] args: input parameters (array of Strings)
     - //block of code executed only if expression1 and expression2 is false
   - `}` 
 - Check an example in: `app.section4.IfElseStatement_018`
-
 
 <a name="switch-statement"></a>
 ### Switch statement
@@ -684,3 +665,26 @@ String[] args: input parameters (array of Strings)
 
 <a name="string-pool"></a>
 ### String Pool
+  - What is a String Pool?
+    - Let's say you create a new String with literal value "John"
+      - JVM stores in the memory location known as **String pool** or **intern pool**
+    - After that you create a new String variable and assign it a same literal value
+      - instead of creating a new memory spot for this literal value
+      - Java will save the memory and look in the String pool
+      - New variable will point to the existing location in the String pool
+  - Examples in: `app.section5.StringPool_027`
+  - If you don't want the compiler use the pool, you can achieve this creating a new object with keyword new:
+    - `String name = "Alan";`
+    - `String name2 = new String("Alan");` // it will address to a different memory location than the variable above
+
+<a name="arrays"></a>
+## Arrays
+
+<a name="creating-an-array"></a>
+### Creating an Array
+
+<a name="sorting-searching-comparing-arrays"></a>
+### Sorting, Searching & Comparing Arrays
+
+<a name="multidimensional-arrays"></a>
+### Multidimensional Arrays
