@@ -679,9 +679,42 @@ String[] args: input parameters (array of Strings)
 
 <a name="arrays"></a>
 ## Arrays
+  - Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
+  - Arrays don't implement equals() method, and if you print the variable of the array you will get the hashcode of the reference. Example: `I@7a4f0f29`
+  - In this case you can use the toString method:
+  - `int[] nums = {1, 2, 3};`
+  - `System.ou.println(Arrays.toString(nums));` // [1, 2, 3]
+  - Array has a property called `length`, **is not a method**
+  - `System.ou.println(nums.length);` // 3
 
 <a name="creating-an-array"></a>
 ### Creating an Array
+  - Creating an array:
+    - `int[] nums = new int[3];`  
+      - [] - read "array"
+      - nums - name of the variable
+      - new - keyword
+      - 3 - size of the array
+  - There is many ways to initialize an array:
+    - First declare, then initialize
+      - `int [] nums = new int[3];`
+      - `nums = new int[]{3, -1, 17};`
+    - Initialization can be done without keyword new
+      - `nums = {3, 6, 9};`
+    - Declaring and initializing at once
+      - `int[] myNumbers = new int[]{3, 7, 13};`
+      - `int[] myIntArray = {1, 6, 12};`
+  - There are more allowed ways to declare an array:
+    - `int[] nums;`
+    - `int [] nums;`
+    - `int []nums;`
+    - `int nums[];`
+    - `int nums [];`
+    - **NOTE:** The size must be on the right side, and never on the left: `int nums[5];` 
+  - You can have multiple values in one declaration, but is not recommended:
+  - `int[] myNumbers, myIntValues`;
+  - Also, you can even declare int number and int array in the same line, but is not recommended:
+  - `int myNumbers[], myNumber;`
 
 <a name="sorting-searching-comparing-arrays"></a>
 ### Sorting, Searching & Comparing Arrays
