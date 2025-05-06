@@ -475,7 +475,7 @@ String[] args: input parameters (array of Strings)
   - `short s;`
   - `s = z;` // NOK! you can't put int into short
   - `s = (short) z;` // OK
-  - More examples:
+- More examples:
   - `int x = 1.0;` // NOK
   - `int Y = 123l;` // NOK
   - `long z = 5;` // OK
@@ -674,18 +674,18 @@ String[] args: input parameters (array of Strings)
       - New variable will point to the existing location in the String pool
   - Examples in: `app.section5.StringPool_027`
   - If you don't want the compiler use the pool, you can achieve this creating a new object with keyword new:
-    - `String name = "Alan";`
-    - `String name2 = new String("Alan");` // it will address to a different memory location than the variable above
+      - `String name = "Alan";`
+        - `String name2 = new String("Alan");` // it will address to a different memory location than the variable above
 
 <a name="arrays"></a>
 ## Arrays
   - Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
   - Arrays don't implement equals() method, and if you print the variable of the array you will get the hashcode of the reference. Example: `I@7a4f0f29`
   - In this case you can use the toString method:
-  - `int[] nums = {1, 2, 3};`
-  - `System.ou.println(Arrays.toString(nums));` // [1, 2, 3]
+    - `int[] nums = {1, 2, 3};`
+    - `System.ou.println(Arrays.toString(nums));` // [1, 2, 3]
   - Array has a property called `length`, **is not a method**
-  - `System.ou.println(nums.length);` // 3
+    - `System.ou.println(nums.length);` // 3
 
 <a name="creating-an-array"></a>
 ### Creating an Array
@@ -705,19 +705,72 @@ String[] args: input parameters (array of Strings)
       - `int[] myNumbers = new int[]{3, 7, 13};`
       - `int[] myIntArray = {1, 6, 12};`
   - There are more allowed ways to declare an array:
-    - `int[] nums;`
-    - `int [] nums;`
-    - `int []nums;`
-    - `int nums[];`
-    - `int nums [];`
-    - **NOTE:** The size must be on the right side, and never on the left: `int nums[5];` 
+      - `int[] nums;`
+      - `int [] nums;`
+      - `int []nums;`
+      - `int nums[];`
+      - `int nums [];`
+      - **NOTE:** The size must be on the right side, and never on the left: `int nums[5];` 
   - You can have multiple values in one declaration, but is not recommended:
-  - `int[] myNumbers, myIntValues`;
+    - `int[] myNumbers, myIntValues`;
   - Also, you can even declare int number and int array in the same line, but is not recommended:
-  - `int myNumbers[], myNumber;`
+    - `int myNumbers[], myNumber;`
+  - Printing an array:
+    - `System.out.println(Arrays.toString(nums));`
+  - Length (property and not a method):
+    - `System.out.println(nums.length);`
 
 <a name="sorting-searching-comparing-arrays"></a>
 ### Sorting, Searching & Comparing Arrays
+- Sorting:
+  - Arrays are mutable, if you use `sort()` the original array will be changed. 
+  - To sort the array ascending: `Arrays.sort(nums);` 
+- Searching:
+  - `Arrays.binarySearch()`
+    - NOTE: Works only on sorted arrays.
+    - If the array is not sorted, the result is unpredictable
+    - takes an array and an element as arguments
+      - returns the index of the array if the element is found
+      - returns the negative number if the element is not found
+        - `nth place with '-' in front
+      - `System.out.println(Arrays.binarySearch(nums, 4));`
+- Comparing:
+  - `Arrays.compare()`
+  - Determines which array is "smaller" and returns
+    - negative number if first is smaller then second
+    - zero if the arrays are equal in content
+    - positive number if first is larger than second
+    - What is "smaller"?
+      - if one array has less numbers of elements, it's smaller
+      - if both arrays have some numbers of elements
+        - smaller is the one whose first different member is smaller
+      - null is smaller than any other values
+      - for Strings:
+        - one is smaller if it's a prefix of another
+        - numbers are smaller than letters
+        - uppercase is smaller than lowercase
+        - alphabetical order is applied
 
+```
+Arrays.compare(new int[]{3,7}, new int[]{3});
+=> positive number
+
+Arrays.compare(new int[]{3,7}, new int[]{3, 7});
+=> 0
+
+Arrays.compare(new String[]{"ab", "John Wayne"}, new String[]{"abc", "Hey!"});
+=> negative number
+```
+
+- `Arrays.mismatch()`
+  - returns -1 if arrays are equal, otherwise the first index where they differ
+
+```
+Arrays.mismatch(new int[]{3,7}, new int[]{3,7});
+=> -1
+
+Arrays.mismatch(new int[]{3,7}, new int[]{3});
+=> 1
+```
 <a name="multidimensional-arrays"></a>
 ### Multidimensional Arrays
