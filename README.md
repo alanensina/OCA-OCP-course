@@ -209,7 +209,27 @@ String[] args: input parameters (array of Strings)
   - Order of initialization:
     - fields and instance initializer blocks in order which they appear
     - constructor runs in the end
-    - Example in: `app.section2.Dog_007`
+
+```
+public class Dog {
+    private String name = "Chip";
+
+    public Dog(){
+        // Those two lines will be the 2nd thing to be executed
+        name = "Teddy";
+        System.out.println("Inside the constructor.");
+    }
+
+    {
+        System.out.println("Inside of the initializer block."); // This is the 1st thing to be executed
+    }
+
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        System.out.println(dog.name); // This is going to be the 3rd thing to be executed
+    }
+}
+```
 
 <a name="data-types"></a>
 ### Data types
@@ -774,3 +794,69 @@ Arrays.mismatch(new int[]{3,7}, new int[]{3});
 ```
 <a name="multidimensional-arrays"></a>
 ### Multidimensional Arrays
+
+An array of arrays. There are no limits.
+```
+int[][] arrays = {{1, 5, 7, 9}, {0, 14, 2, 3}, {12, 1}};
+
+int[][] arr = {
+  {0, 1, 2},
+  {1, 2},
+  {13, 14, 16}
+};
+```
+
+Accessing elements with traditional loops:
+```
+int[][] a = {
+  {-1, 17}, 
+  {3}, 
+  {5, 103, 11}, 
+  {4, 9, -6, 8}
+};
+
+for(int i = 0 ; i < a.length ; i++){
+  for(int j = 0 ; j < a[i].length ; j++){
+    System.out.println("a(%d, %d) = %d".formatted(i, j, a[i][j]));
+  }
+}
+```
+```
+=> a(0,0) = -1
+=> a(0,1) = 17
+=> a(1,0) = 3
+=> a(2,0) = 5
+=> a(2,1) = 103
+=> a(2,2) = 11
+=> a(3,0) = 4
+=> a(3,1) = 9
+=> a(3,2) = -6
+=> a(3,3) = 8
+```
+Accessing elements with for-each loop (no control over indices)
+```
+int[][] a = {
+  {-1, 17}, 
+  {3}, 
+  {5, 103, 11}, 
+  {4, 9, -6, 8}
+};
+
+for(int[] row : a){
+  for(int element : row){
+    System.out.println("element = " + element);
+  }
+}
+```
+```
+=> element = -1
+=> element = 17
+=> element = 3
+=> element = 5
+=> element = 103
+=> element = 11
+=> element = 4
+=> element = 9
+=> element = -6
+=> element = 8
+```
