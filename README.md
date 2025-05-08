@@ -76,7 +76,31 @@
   - Fields hold the information about the state of an object or a class
   - Methods describe some action or operation on that state
     - methods are similar to functions in some older programming language
-  - Example: check the class found in -> `app.section2.Student_002`
+  
+  ```
+  public class Student{
+
+    /**
+     * Example of a field
+     */
+    String name;
+
+    /**
+     * Example of a method with a return
+     */
+    public String getName(){
+        return name; // the return of the method
+    }
+
+    /**
+     * Example of a method without a return
+     */
+    public void setName(String name){
+        this.name = name; // set the parameter into the field
+    }
+  }
+
+  ```
 
 - Comments
   - Comments are used to make a code more readable
@@ -142,7 +166,22 @@ main: name of the method
 
 String[] args: input parameters (array of Strings)
 
-  - Example of use args as input in main method: `app.section2.Names_004`
+
+```
+  /**
+ * To compile and run:
+ * javac Names.java
+ * java Names Alan Ensina
+ * Note: If you don't provide at least 2 args, an exception will be thrown: index out of bounds
+ */
+public class Names {
+
+    public static void main(String[] args) {
+        System.out.println("First name: " + args[0]); // arrays starts at 0 index
+        System.out.println("Second name: " + args[1]);
+    }
+}
+```
 
 <a name="packages"></a>
 ### Packages
@@ -151,7 +190,19 @@ String[] args: input parameters (array of Strings)
 - In order to use a class, you must _import_ a package in your program
 - The package's name usually looks like something like this: `com.alanensina.javacourse`
   - This means that there is a folder `com`, with a subfolder `alanensina`, with a subfolder `javacourse` containing classes
-- Check a simple example of import and package in: `app.section2.NumberGenerator_005`
+
+```
+  // The Random class was imported
+import java.util.Random;
+
+public class NumberGenerator {
+    public static void main(String[] args) {
+        Random randomNumber = new Random();
+        System.out.println("Random number generated: " + randomNumber.nextInt(100));
+    }
+}
+```
+
 - There's an option to use a fully qualified name of class instead to import it: `java.util.Random randomNumber = new java.util.Random();` but is not common to use.
 - You can use wildcards to import all the classes in the package: `import java.util.*` but will not import the subpackages (subfolders)
 - Be careful about conflicts:
@@ -407,7 +458,23 @@ public class Dog {
     - The object has no reference pointing to it
     - All references of the object have gone out of scope
   - In other words, when the objects "hangs in the air"
-- Check an example in: `app.section2.GCExample_012`
+
+
+```
+public class GCExample_012 {
+    public static void main(String[] args) {
+        String a, b;
+
+        a = new String("Emperor"); // Emperor is stored in HEAP
+        b = new String("King"); // King is stored in HEAP
+
+        a = b; // a no points to the reference of b, which is King, so Emperor now is eligible to Garbage Collection
+
+        String c = a; // Points to the reference of King in HEAP
+        a = null;
+    }
+}
+```
 
 <a name="operators"></a>
 ## Operators
@@ -459,7 +526,22 @@ public class Dog {
   - `a++` increases value by 1 and returns a OLD value
   - `--a` decreases value by 1 and returns a NEW value
   - `a--` decreases value by 1 and returns a OLD value
-  - Example in: `app.section3.IncrementAndDecrement_014`
+
+```
+  public class IncrementAndDecrement_014 {
+    public static void main(String[] args) {
+        int a = 1;
+        int b = a++; // Returns the old value
+        System.out.println("a: " + a); // 2
+        System.out.println("b: " + b); // 1
+
+        int c = 2;
+        int d = ++c;
+        System.out.println("c: " + c); // 3
+        System.out.println("d: " + d); // 3
+    }
+}
+```
 
 <a name="binary-operators"></a>
 ### Binary operators
@@ -478,7 +560,28 @@ public class Dog {
   - If one value is integer, and  another is decimal, Java promotes int to decimal
   - byte, short and char are **always** first promoted to int before the operations is done
   - The result value has the same data type as the promoted operands
-  - See example in: `app.section3.RulesOfNumericPromotion_015`
+
+```
+  public class RulesOfNumericPromotion {
+
+    public static void main(String[] args) {
+
+        short a = 17;
+        float b = 15;
+        double c = 35;
+        // a and b are promoted to double, because is the largest, so the result is double.
+        System.out.println("a * b / c = " + a * b / c);
+
+
+        short x = 5;
+        short y = 7;
+        // x and y are promoted to int, result is int
+        System.out.println("x + y = " + x + y);
+
+       // short z = x + y; // DOES NOT COMPILE (you tried to put int into short)
+    }
+}
+```
 
 <a name="assignment-operator"></a>
 ### Assignment operator
@@ -521,7 +624,35 @@ public class Dog {
   - expression `a = 2` does two things 
     - assign value 2 to variable a
     - returns value 2
-  - Check the example in: `app.section3.AssignmentOperator_016`
+
+```
+  public class AssignmentOperator {
+
+    public static void main(String[] args) {
+        // Example of exam trick:
+        int x = 5;
+        int y = (x = 3) * 2; // x is setted to 3
+        System.out.println("x: " + x);
+        System.out.println("y: " + y);
+
+
+        // Example of exam trick:
+        boolean isOK = false;
+        if(isOK = true){
+            System.out.println("A"); // THAT WILL BE PRINTED BECAUSE ISOK WAS SETTED TO TRUE
+        }else{
+            System.out.println("B");
+        }
+
+
+        if(isOK == false){
+            System.out.println("A");
+        }else{
+            System.out.println("B"); // THAT WILL BE PRINTED BECAUSE ISOK now is true
+        }
+    }
+}
+```
 
 <a name="comparison-operator"></a>
 ### Comparison operator
@@ -539,7 +670,30 @@ public class Dog {
     - returns `false` if both objects reference to the same object 
 - You can only compare values or similar type (auto-casting applies)
 - Relational operators: `>`, `>=`, `<`, `<=`, `instanceof`
-  - Check example: `app.section3.ComparisonOperators_017`
+  
+```
+    public class ComparisonOperators {
+
+      public static void main(String[] args) {
+        isInteger(5);
+        isInteger(3.14);
+        isInteger("Alan");
+      }
+
+    /**
+     * Integer is a subtype of Number
+     * @param num
+     */
+      public static void isInteger(Object num){
+        if(num instanceof Number){
+            System.out.println(num + " is an Integer.");
+        } else {
+            System.out.println(num + " is not an Integer.");
+        }
+      }
+    }
+```
+
 - Logical operators:
   - AND: `a & b`
     - `true` if at least one operand is true
@@ -574,19 +728,264 @@ public class Dog {
   - `}else{`
     - //block of code executed only if expression1 and expression2 is false
   - `}` 
-- Check an example in: `app.section4.IfElseStatement_018`
+
+```
+  public class IfElseStatement_018 {
+    public static void main(String[] args) {
+        int a = 1;
+        int b = 2;
+        int c = 3;
+
+        /**
+         * First example
+         */
+        if(a < b){ // is true because a = 1 and b = 2
+            System.out.println("a < b"); // This block of code will be executed
+        }
+        else if(a > b){ // is false because a = 1 and b = 2
+            System.out.println("a > b");
+        }
+        else{
+            System.out.println("a == b");
+        }
+
+        /**
+         * Second example
+         */
+        if(a > c){ // is false because a = 1 and c = 3
+            System.out.println("a > c");
+        }
+        else if(c > b){ // is true because c = 3 and b = 2
+            System.out.println("c > b"); // This block of code will be executed
+        }
+        else{ //
+            System.out.println("c == b");
+        }
+
+        /**
+         * Third example
+         */
+        if(a > c && b > c){ // is false because a = 1 and b = 2 and c = 3
+            System.out.println("a > c and b > c");
+        }
+        else if(c < b || a == b){ // is false because a = 1 and b = 2 and c = 3
+            System.out.println("c < b or a == b");
+        }
+        else{ // First and second condition wasn't reached, so, else statement will be thrown
+            System.out.println("Else statement reached!"); // This block of code will be executed
+        }
+    }
+}
+```
 
 <a name="switch-statement"></a>
 ### Switch statement
 
-- Check the syntax in: `app.section4.SwitchStatement_019`
+```
+  public class SwitchStatement {
+
+    public static void main(String[] args) {
+        greetingsIfStatement(0);
+        greetingsSwitch(0);
+        greetingsSwitchAfterJava14(4);
+    }
+
+    /**
+     * Example of method using if-else statement
+     * @param a - an int number
+     */
+    public static void greetingsIfStatement(int a){
+        if(a == 0){
+            System.out.println("Good morning!");
+        }
+        else if(a == 1){
+            System.out.println("Good afternoon!");
+        }
+        else if(a == 2){
+            System.out.println("Good evening!");
+        }else{
+            System.out.println("Hi!");
+        }
+    }
+
+    /**
+     * This method do the same thing that greetingsIfStatement's method, but using switch
+     * @param a - an int number
+     */
+    public static void greetingsSwitch(int a){
+
+        // Allowed variable types: int (Integer), byte (Byte), short (Short), char (Character), String and enum type
+        // Not allowed variables: boolean, long, float and double
+
+        switch(a){ // a is the variable that will be evaluated
+            case 0: // 0 is the constant that will be checked with the variable
+                System.out.println("Good morning!"); // block of code if the variable matches with the constant
+                break; // is optional, but if there's no break, all the following cases will be executed
+            case 1:
+                System.out.println("Good afternoon!");
+                break;
+            case 2: // You can combine 2 or more cases to run the same block of code
+            case 3:
+                System.out.println("Good evening!");
+                break;
+            default: // it's optional, it will be executed if the variable didn't match with any constant. Also, you can put default in any order, but as a good practice, put in the end.
+                System.out.println("Hi!"); // block of code executed
+        }
+    }
+
+    /**
+     * Combineing values after Java 14
+     * @param a
+     */
+    public static void greetingsSwitchAfterJava14(int a){
+        switch(a){
+            case 0:
+                System.out.println("Good morning!");
+                break;
+            case 1:
+                System.out.println("Good afternoon!");
+                break;
+            case 2: case 3: case 4: // You can put all cases in the same line
+                System.out.println("Good evening!");
+                break;
+            default:
+                System.out.println("Hi!");
+        }
+    }
+}
+```
+
 - Allowed variable types: int (Integer), byte (Byte), short (Short), char (Character), String and enum type
 - Not allowed variables: boolean, long, float and double
 
 <a name="while-loop"></a>
 ### While Loop
 
-- Check the syntax in: `app.section4.WhileLoop_021`
+```
+public class WhileLoop {
+
+    public static void main(String[] args) {
+
+        // Print out number from 0 to 9
+        System.out.println("===============================");
+        System.out.println("Print out number from 0 to 9:");
+        int i = 0;
+        while(i<10){
+            System.out.println(i);
+            i++;
+        }
+
+        System.out.println("===============================");
+
+        // Example of a body that will never be executed
+        int a = 5;
+        int b = 7;
+
+        while (a > b){
+            System.out.println("a > b");
+        }
+
+        // Example of infinite loop (BE CAREFUL)
+//        while (a < b){
+//            System.out.println("a < b");
+//        }
+
+        // Example 2:
+//        while(true){
+//            System.out.println("Infinite loop!");
+//        }
+
+        // Break statement example
+        System.out.println("Example with break statement:");
+        int x = 0;
+        while(true){
+            System.out.println(x);
+            if(x == 10) break;
+            x++;
+        }
+        System.out.println("===============================");
+
+        // Nested loops example:
+        System.out.println("Example with nested loops:");
+        int h = 0;
+        int j = 0;
+        while(h < 3){
+            h++;
+            j = 0;
+            while(j < 3){
+                j++;
+                System.out.println("(" + h + ", " + j + ") ");
+            }
+        }
+        System.out.println("===============================");
+
+        // Using break in nested loops:
+        System.out.println("Using break in nested loops:");
+        int m = 0;
+        int n = 0;
+        while(true) {
+            m++;
+            n = 0;
+            while (true) {
+                n++;
+                System.out.println("(" + m + ", " + n + ") ");
+
+                if(n == 3) break;
+            }
+
+            if(m == 3) break;
+        }
+        System.out.println("===============================");
+
+        // Using break in nested loops, with labels:
+        System.out.println("Using break in nested loops, with labels:");
+        int p = 0;
+        int q = 0;
+        OUTER_LOOP: while(true) {
+            p++;
+            q = 0;
+            INNER_LOOP: while (true) {
+                q++;
+                System.out.println("(" + p + ", " + q + ") ");
+
+                if(q == 3) break OUTER_LOOP; // Will break the outer loop when the inner loop reaches 3.
+            }
+        }
+        System.out.println("===============================");
+
+        // Continue statement skips one iteration of the loop
+        // task: print all even numbers between 0 and 20
+
+        System.out.println("Printing all even numbers between 0 and 20:");
+        int k = -1;
+        while(k<21){
+            k++;
+            if(k%2==1) continue;
+            System.out.println(k);
+        }
+        System.out.println("===============================");
+
+        printPairs();
+        System.out.println("===============================");
+    }
+
+    // Return statements breaks the execution of the loop and exits the method.
+    private static void printPairs() {
+        System.out.println("Example with return statement:");
+        int h = 0;
+        int j = 0;
+        while(true){
+            h++;
+            while(true){
+                j++;
+                System.out.println("(" + h + ", " + j + ") ");
+                if(j == 4) return;
+            }
+        }
+    }
+}
+```
+
 - You can use a `break` statement if you want to break the loop
 - Also, you can use `labels` to define the loops
 - The `continue` keyword can be used to define a next iteration of the loop
@@ -595,7 +994,35 @@ public class Dog {
 <a name="dowhile-loop"></a>
 ### Do/While loop
 - The main difference compared to while loop is that a block of code will be executed at least once
-- Check the syntax in: `app.section4.DoWhileLoop_022`
+
+```
+public class DoWhileLoop {
+
+    public static void main(String[] args) {
+
+        // Print out numbers from 0 to 9 using do/while loop
+        int i = 0 ;
+        System.out.println("Print out numbers from 0 to 9 using do/while loop:");
+        do{
+            System.out.println(i);
+            i++;
+        } while (i < 10);
+        System.out.println("=========================================");
+
+        // Example of a body executed at least once:
+        int k = 0 ;
+        int j = 5;
+        System.out.println("Example of a body executed at least once:");
+        do{
+            // Will be printed just once
+            System.out.println(k);
+            k++;
+        } while (k > j);
+        System.out.println("=========================================");
+    }
+}
+```
+
 - You can use `break`, `continue`, `return`, nested loops, unreachable code, etc, just like a normal while loop
 
 <a name="for-loop"></a>
@@ -611,12 +1038,59 @@ public class Dog {
 - Example of infinite loop: `for ( ; ; ){ }`
 - You can use more than one index in a for loop separated by coma
 - You can use `break`, `continue`, `return`, nested loops, unreachable code, etc, just like a normal while loop
-- Check the syntax in: `app.section4.ForLoop_023`
+
+```
+public class ForLoop {
+    public static void main(String[] args) {
+        // Print out number from 0 to 9
+        System.out.println("Print out number from 0 to 9:");
+        for(int i = 0 ; i < 10; i++){
+            System.out.println(i);
+        }
+        System.out.println("=====================================");
+
+        // You can use more than one index in a for loop separated by coma:
+        System.out.println("Print out numbers with more than one index:");
+        for(int k = 0, l = 0 ; k+l < 5; k++, l++){
+            System.out.println("k: " + k + ", l: " + l);
+        }
+
+    }
+}
+```
+
 
 <a name="for-each-loop"></a>
 ### For-each loop
 - For loop is often used to access members of an array (or collection)
-- Check the syntax in: `app.section4.ForEachLoop_024`
+
+```
+public class ForEachLoop {
+    public static void main(String[] args) {
+
+        String[] cars = {"Ford", "Renault", "Fiat", "Honda", "Kia"};
+        System.out.println("Printing all elements of array using a normal for: ");
+        for(int i = 0 ; i < cars.length ; i++){
+            System.out.println(cars[i]);
+        }
+        System.out.println("===========================================");
+
+        System.out.println("Printing all elements of array using for-each loop: ");
+        for(String car : cars){
+            System.out.println(car);
+        }
+        System.out.println("===========================================");
+
+        // Example of Java 17:
+        System.out.println("Printing all elements of array using for-each loop (Java 17): ");
+        for(var car : cars){
+            System.out.println(car);
+        }
+
+    }
+}
+```
+
 - In Java 17 for-each loop is often used with LVTI
 
 <a name="strings"></a>
@@ -628,36 +1102,304 @@ public class Dog {
     - `String name = new String("Alan");`
   - Concatenation: put two or more String as one:
     - `string1 + string2` or `string1.concat(string2)`;
-- Concatenation examples in: `app.section5.StringConcatenation_025`
+
+
+```
+  public class StringConcatenation {
+    public static void main(String[] args) {
+
+        //Adition:
+        System.out.println(3+8);
+
+        // Concatenation
+        System.out.println("Alan"+"Ensina");
+
+        // If one element is a String, so is a concatenation:
+        System.out.println("Alan" + 33);
+
+        // The order of the concatenation is left to right
+        System.out.println(7 + "Alan" + 33); // 7Alan3
+
+        // In this case, the operation is done first on the left and then the concatenation happens
+        System.out.println(3+7+"Alan"); //10Alan
+
+        //In this case the operation is done first because of the priority of the parentesis
+        System.out.println("Alan" + (3+7)); // Alan10
+
+        //You can concatenate a null to a String
+        System.out.println("Alan"+null); //Alannull
+
+        // You can use assignment operators:
+        String test = "John";
+        test += "Wayne";
+        System.out.println(test); //JohnWayne
+    }
+}
+```
+
 - _**String are immutable!**_
 
 <a name="string-methods"></a>
 ### String methods
-  - Examples in: `app.section5.StringMethods_025`
-    - `length()` - Length of the String
-    - `charAt(index)` - Get the char located in the index, if the index doesn't exist, a StringIndexOutOfBoundsException
-    - `indexOf(char)` - It will return the index of a char in the String in his FIRST APPEARANCE
-    - `substring(index)` - Creates a new String from an index till the end of the String, the char of the index will be included
-    - `toLowerCase()` - Put all characters in lower case
-    - `toUpperCase()` - Put all characters in upper case
-    - `equals()` -  Compare the content if is the same
-    - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case-sensitive
-    - `startsWith()` - Compare the start of the String and return a boolean value
-    - `endsWith()` - Compare the end of the String and return a boolean value
-    - `contains()` - Verify if the String contains a substring and return a boolean value
-    - `replace()` - Replace a char/String to another char/String into the String
-    - `strip()` - Remove the whitespaces from beginning and end of the String
-    - `trim()` - Same as strip, but supports Unicode
-    - `stripLeading()` - Remove the whitespaces ONLY in the beginning of the String
-    - `stripTrailing()` - Remove the whitespaces ONLY in the end of the String
-      - **Whitespaces** also includes \t (tab), \n (new line), \r (carriage return). All escape sequences count as one character in length
-    - `indent(n)` -add or remove whitespaces characters from beginning of the string
-    - `stripIndent()` - removes all leading incidental whitespaces
-    - `translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
-    - `isEmpty()` - Returns a boolean if the String is empty, But if the String has at least one whitespace, it will not consider an empty String
-    - `isBlank()` - Returns a boolean if the String is empty, even with whitespace.
-    - `format()` - Used to use symbols to express variables (Example %s , %d ...)
-    - `formatted()` - Used to use symbols to express variables (Example %s , %d ...)
+
+```
+  public class StringMethods {
+    public static void main(String[] args) {
+        lengthExample();
+        charAtExample();
+        indexOfExamples();
+        substringExamples();
+        toLowerCaseAndUpperCaseExamples();
+        equalsAndEqualsIgnoreCaseExamples();
+        startsWithExample();
+        endsWithExample();
+        containsExample();
+        replaceExample();
+        stripAndTrimExample();
+        stripLeadingAndStripTrailingExample();
+        indentandStripIndentExample();
+        translateEscapesExample();
+        isBlankAndIsEmptyExample();
+        formattingSymbolsExamples();
+        stringsAreImmutableExample();
+    }
+
+    private static void lengthExample() {
+        String name = "Alan";
+        //length() - length of the String
+        System.out.println(name.length()); // 4
+    }
+
+    private static void charAtExample() {
+        String name = "Alan";
+        //charAt(index) - Get the char located in the index, if the index doesn't exists, a StringIndexOutOfBoundsException
+        System.out.println(name.charAt(3)); // 'n'
+    }
+
+    private static void indexOfExamples() {
+        // indexOf(char) - It will return the index of a char in the String in his FIRST APPEARANCE
+        String surname = "Ensina";
+        System.out.println(surname.indexOf('n')); // 1
+
+        // You can put a parameter to start from that index, in this case, the first char n will be ignorated
+        System.out.println(surname.indexOf('n', 2)); // 4
+
+        // You can pass a String and this combination will be searched, and the first index will be printed if found.
+        System.out.println(surname.indexOf("ina")); // 3
+
+        // Starting from a index defined
+        System.out.println(surname.indexOf("ina",2)); // 3
+
+        // If the char is not found, a -1 will be returned
+        System.out.println(surname.indexOf("P")); // -1
+    }
+
+    private static void substringExamples() {
+        String fullName = "Alan Ensina";
+
+        //substring() - creates a new String from an index till the end of the String, the char of the index will be included
+        System.out.println(fullName.substring(5)); //Ensina
+
+        // You can put a range, but the second index will be not included:
+        System.out.println(fullName.substring(2,6)); //an E
+
+        System.out.println(fullName.substring(2,2)); // empty string
+
+        // Be carefull with the index, or an StringIndexOutOfBoundsException will be thrown
+    }
+
+    private static void toLowerCaseAndUpperCaseExamples() {
+        // toLowerCase() - Put all characters in lower case
+        String name = "AlAN EnSiNa";
+        System.out.println(name.toLowerCase()); // alan ensina
+
+        // toUpperCase() - Put all characters in upper case
+        System.out.println(name.toUpperCase()); // ALAN ENSINA
+    }
+
+    private static void equalsAndEqualsIgnoreCaseExamples() {
+       String name1 = "Alan";
+       String name2 = "alan";
+       String name3 = "Alan";
+
+        System.out.println(name1 == name2); // false, because is not referencing the same object
+
+        // equals() -  compare the content if is the same
+        // equalsIgnoreCase() - compare the content if is the same, but ignoring the case sensitive
+        System.out.println(name1.equals(name2)); // false because the content is not the same
+        System.out.println(name1.equals(name3)); // true because the content is the same
+        System.out.println(name1.equalsIgnoreCase(name2)); // true because the content is the same ignoring the case sensitive
+    }
+
+    private static void startsWithExample() {
+        // startsWith() - Compare the start of the String and return a boolean value
+        System.out.println("Alan".startsWith("A")); // true
+        System.out.println("Alan".startsWith("Al")); // true
+        System.out.println("Alan".startsWith("a")); // false
+    }
+
+    private static void endsWithExample() {
+        // endsWith() - Compare the end of the String and return a boolean value
+        System.out.println("Alan".endsWith("n")); // true
+        System.out.println("Alan".endsWith("an")); // true
+        System.out.println("Alan".endsWith("d")); // false
+    }
+
+    private static void containsExample() {
+        // contains() - Verify if the String contains a substring and return a boolean value
+        String name = "Alan";
+        System.out.println(name.contains("A")); // true
+    }
+
+    private static void replaceExample() {
+        // replace() - replace a char/String to another char/String into the String
+        String name = "Alan";
+        System.out.println(name.replace('l', 'd').replace('n', 'm')); // Adam
+        System.out.println(name.replace("la", "to")); // Aton
+    }
+
+    private static void stripAndTrimExample() {
+        //  Whitespaces also includes \t (tab), \n (new line), \r (carriage return). All escape sequences count as one character in length
+        // strip() - remove the whitespaces from beginning and end of the String
+        String name = "      Alan           ";
+        System.out.println("|" + name.strip() + "|"); // |Alan|
+
+        // trim() - same as strip, but supports Unicode
+        System.out.println("|" + name.trim() + "|"); // |Alan|
+    }
+    private static void stripLeadingAndStripTrailingExample() {
+        // stripLeading() - remove the whitespaces ONLY in the beginning of the String
+        String name = "      Alan           ";
+        System.out.println("|" + name.stripLeading() + "|"); // |Alan           |
+
+        // stripTrailing() - remove the whitespaces ONLY in the end of the String
+        System.out.println("|" + name.stripTrailing() + "|"); // |      Alan|
+    }
+
+    private static void indentandStripIndentExample() {
+
+        /*
+        indent(n) -add or remove whitespaces characters from beginning of the string
+        - If n = 0 > does nothing
+        - n > 0 adds the same number of blank spaces to each line
+        - n < 0 tries to remove n whitespace characters from the beginning of line
+        - normalizes existing line breaks
+        - ADD line break at the end if missing
+         */
+
+        /*
+        stripIndent() - removes all leading incidental whitespaces
+        - normalize existing line breaks
+        - DOES NOT ADD line break at the end if missing
+         */
+
+        String str = "   Bruce\n    D.\n     Wayne";
+
+        System.out.println("---");
+        System.out.println(str);
+        System.out.println("---");
+        System.out.println(str.indent(2));
+        System.out.println("---");
+        System.out.println(str.indent(-2));
+        System.out.println("---");
+        System.out.println(str.stripIndent());
+        System.out.println("---");
+
+        /* Print:
+---
+   Bruce
+    D.
+     Wayne
+---
+     Bruce
+      D.
+       Wayne
+
+---
+ Bruce
+  D.
+   Wayne
+
+---
+Bruce
+ D.
+  Wayne
+---
+*/
+    }
+
+    private static void translateEscapesExample() {
+        // translateEscapes() - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
+        String name = "Bruce\\tWayne";
+        System.out.println("Before: " + name);
+        System.out.println("After: " + name.translateEscapes());
+
+        /*
+        Before: Bruce\tWayne
+        After: Bruce	Wayne
+         */
+    }
+
+    private static void isBlankAndIsEmptyExample() {
+        // isEmpty() - Returns a boolean if the String is empty, But if the String has at least one whitespace, it will not consider an empty String
+        System.out.println("".isEmpty()); // true
+        System.out.println("  ".isEmpty()); // false
+
+        // isBlank() - Returns a boolean if the String is empty, even with whitespace.
+        System.out.println("".isBlank()); // true
+        System.out.println("  ".isBlank()); // true
+    }
+
+    private static void formattingSymbolsExamples() {
+        // format() - Used to use symbols to express variables (Example %s , %d ...)
+        // formatted() - Used to use symbols to express variables (Example %s , %d ...)
+
+        String name = "John";
+        int numberOfMarbles = 5;
+
+        String print = String.format("%s has %d marbles.", name, numberOfMarbles);
+        System.out.println(print);
+        String print2 = "%s has %d marbles.".formatted(name, numberOfMarbles);
+        System.out.println(print2);
+    }
+
+    private static void stringsAreImmutableExample() {
+        // String are immutable!
+
+        String name = "Alan";
+        name.toUpperCase();
+        System.out.println(name); // "Alan" (because Strings are immutable)
+
+        name = name.toUpperCase(); // you have to reassign the new value or create a new String
+        System.out.println(name); // "ALAN"
+    }
+}
+```
+
+  - `length()` - Length of the String
+  - `charAt(index)` - Get the char located in the index, if the index doesn't exist, a StringIndexOutOfBoundsException
+  - `indexOf(char)` - It will return the index of a char in the String in his FIRST APPEARANCE
+  - `substring(index)` - Creates a new String from an index till the end of the String, the char of the index will be included
+  - `toLowerCase()` - Put all characters in lower case
+  - `toUpperCase()` - Put all characters in upper case
+  - `equals()` -  Compare the content if is the same
+  - `equalsIgnoreCase()` - compare the content if is the same, but ignoring the case-sensitive
+  - `startsWith()` - Compare the start of the String and return a boolean value
+  - `endsWith()` - Compare the end of the String and return a boolean value
+  - `contains()` - Verify if the String contains a substring and return a boolean value
+  - `replace()` - Replace a char/String to another char/String into the String
+  - `strip()` - Remove the whitespaces from beginning and end of the String
+  - `trim()` - Same as strip, but supports Unicode
+  - `stripLeading()` - Remove the whitespaces ONLY in the beginning of the String
+  - `stripTrailing()` - Remove the whitespaces ONLY in the end of the String
+  - **Whitespaces** also includes \t (tab), \n (new line), \r (carriage return). All escape sequences count as one character in length
+  - `indent(n)` -add or remove whitespaces characters from beginning of the string
+  - `stripIndent()` - removes all leading incidental whitespaces
+  - `translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
+  - `isEmpty()` - Returns a boolean if the String is empty, But if the String has at least one whitespace, it will not consider an empty String
+  - `isBlank()` - Returns a boolean if the String is empty, even with whitespace.
+  - `format()` - Used to use symbols to express variables (Example %s , %d ...)
+  - `formatted()` - Used to use symbols to express variables (Example %s , %d ...)
   - String formatting symbos
     - `%s` - for any type, usually for String
     - `%d` - for integral values (int and long)
@@ -669,8 +1411,102 @@ public class Dog {
   - StringBuilder is a **mutable** class which contains a String
     - It has many useful methods for manipulating the String
       - Syntax: `Stringbuilder name = new StringBuilder("Alan");`
-    - Examples in: `app.section5.StringBuilder_026`
-    - Some methods work in the identical way as with a normal String
+
+```
+public class StringBuilder {
+
+    public static void main(String[] args) {
+        appendExample();
+        insertExample();
+        deleteExample();
+        replaceExample();
+        reverseExample();
+        toStringExample();
+        equalsExample();
+        substringExample();
+    }
+
+    private static void appendExample() {
+        // append() - As far as the StringBuilder is mutable, you don't need to assign a new String to change, works like concatenation
+        var name = new StringBuilder("Alan");
+        name.append(" Ensina");
+        System.out.println(name); // Alan Ensina
+
+        // chaining with append
+        name.append(" ").append(true); // chaining is left to right and all params are converted to String
+        System.out.println(name); // Alan Ensina true
+    }
+    private static void insertExample() {
+        // insert() - Insert a substring into the index defined, chaining can be applied
+        var name = new StringBuilder("Alan Ensina");
+        name.insert(4, " Vinicius Cezar");
+        System.out.println(name); // Alan Vinicius Cezar Ensina
+    }
+
+    private static void deleteExample() {
+        // delete() - Removes a characters from an index (inclusive) to another index (exclusive)
+        var letters = new StringBuilder("abcdef");
+        letters.delete(1,4);
+        System.out.println(letters); // aef
+
+        // deleteCharAt() - Removes a character from an index
+        var letters2 = new StringBuilder("zxcvb");
+        letters2.deleteCharAt(2);
+        System.out.println(letters2); // zxvb
+    }
+
+    private static void replaceExample() {
+        // replace(start, end, text) - Remove characters from start to and end (excluded) and inserts a new String. Note the different syntax that is found on String method replace()
+        var letters = new StringBuilder("abcdef");
+        letters.replace(1,3, "ALAN");
+        System.out.println(letters); // aALANdef
+
+        // If the end index is too large, replace goes through the end of the String (NO EXCEPTION)
+        letters.replace(5, 1000, " ENSINA");
+        System.out.println(letters); // aALAN ENSINA
+    }
+
+    private static void reverseExample() {
+        // reverse() - Reverse the String
+        var name = new StringBuilder("Schwarzenneger");
+        name.reverse();
+        System.out.println(name); // regennezrawhcS
+    }
+
+    private static void toStringExample() {
+        // toString() - return a String object from StringBuilder
+        StringBuilder name = new StringBuilder("Alan");
+        String nameStr = name.toString();
+        System.out.println(nameStr); // Alan
+    }
+
+    private static void equalsExample() {
+        // StringBuilder doesn't implement equals() method!
+        // i.e equals() is the same as ==
+
+        StringBuilder name1 = new StringBuilder("Alan");
+        StringBuilder name2 = new StringBuilder("Alan");
+        System.out.println(name1 == name2); // false
+        System.out.println(name1.equals(name2)); // false
+
+        // If you want to compare the content, convert it back to String
+        System.out.println(name1.toString().equals(name2.toString()));// true
+    }
+
+    private static void substringExample() {
+        // substring() - returns a String and doesn't change the StringBuilder
+
+        StringBuilder name = new StringBuilder("Alan Ensina");
+        name.substring(1,3);
+        System.out.println(name); // Alan Ensina
+
+        String substring = name.substring(1,3);
+        System.out.println(substring); // la
+    }
+}
+```
+    
+  - Some methods work in the identical way as with a normal String
         - `substring()`, `indexOf()`, `length()` and `charAt()`
     - StringBuilder methods:
         - `append()` - As far as the StringBuilder is mutable, you don't need to assign a new String to change, works like concatenation
@@ -692,7 +1528,36 @@ public class Dog {
       - instead of creating a new memory spot for this literal value
       - Java will save the memory and look in the String pool
       - New variable will point to the existing location in the String pool
-  - Examples in: `app.section5.StringPool_027`
+```
+  public class StringPool {
+    public static void main(String[] args) {
+        var name = "John";
+        var name2 = "John";
+        System.out.println(name == name2); // true, because references the same address in the String pool
+
+        // tricky example #1
+        var str1 = "John";
+        var str2 = "  John       ".trim();
+        System.out.println(str1 == str2); // false, because pool is created at compile time, trim() is evaluated at runtime
+
+        // tricky example #2
+        var str3 = "Alan Ensina";
+        var str4 = "Alan" + " " + "Ensina";
+        System.out.println(str3 == str4); // true, because concatenation is created at compile time
+
+        // tricky example #3
+        var str5 = "John";
+        var str6 = "  John       ".trim().intern();
+        System.out.println(str5 == str6); // true, because intern() will instruct the compiler to use the pool even with runtime method
+
+        // tricky example #4 (same as above, but waste more memory because it will use another memory location)
+        var str7 = "John";
+        var str8 = "  John       ".trim();
+        System.out.println(str5 == str6.intern()); // true, because intern() will instruct the compiler to use the pool even with runtime method
+    }
+}
+```
+
   - If you don't want the compiler use the pool, you can achieve this creating a new object with keyword new:
       - `String name = "Alan";`
         - `String name2 = new String("Alan");` // it will address to a different memory location than the variable above
