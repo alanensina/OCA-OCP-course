@@ -33,6 +33,9 @@
     * [Creating an Array](#creating-an-array)
     * [Sorting, Searching & Comparing Arrays](#sorting-searching--comparing-arrays)
     * [Multidimensional Arrays](#multidimensional-arrays)
+  * [Dates and times](#dates-and-times)
+    * [Creating dates and times](#creating-dates-and-times)
+    * [Methods in dates and times](#methods-in-dates-and-times)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -1725,3 +1728,88 @@ for(int[] row : a){
 => element = -6
 => element = 8
 ```
+
+<a name="dates-and-times"></a>
+## Dates and times
+<a name="creating-dates-and-times"></a>
+### Creating dates and times
+
+There are 4 Date/Time types in `java.time` package.
+
+`import java.time.*;`
+
+```
+LocalDate now1 = LocalDate.now();
+LocalTime now2 = LocalTime.now();
+LocalDateTime now3 = LocalDateTime.now();
+ZonedDateTime now4 = ZonedDateTime.now();
+
+System.out.println(now1);
+System.out.println(now2);
+System.out.println(now3);
+System.out.println(now4);
+```
+```
+=> 2025-05-12
+=> 2025-05-12.372755660
+=> 2025-05-12T12:12:51.3727556623
+=> 2025-05-12T12:12:51.3727556642Z[GMT]
+```
+Creating Local Date:
+```
+LocalDate d1 = LocalDate.of(2025, Month.MAY, 12);
+LocalDate d2 = LocalDate.of(2025, 5, 12);
+System.out.println(d1);
+System.out.println(d2);
+```
+```
+=> 2025-05-12
+=> 2025-05-12
+```
+
+Creating Local Time:
+```
+LocalTime d1 = LocalTime.of(21, 50); // hour and minutes
+LocalTime d2 = LocalTime.of(21,50,14); // hour, minutes and seconds
+LocalTime d3 = LocalTime.of(21,50,14, 112); // hour, minutes, seconds and nanoseconds
+System.out.println(d1);
+System.out.println(d2);
+System.out.println(d3);
+```
+```
+=> 21:50
+=> 21:50:14
+=> 21:50:14.000000112
+```
+
+Creating Local Date Time:
+```
+LocalDateTime d1 = LocalDateTime.of(2025, Month.MAY, 12, 21, 50, 14); 
+LocalDate ld = LocalDate.of(2025, 5, 12);
+LocalTime dt = LocalTime.of(21,50,14, 112);
+LocalDateTime d2 = LocalDateTime.of(ld, dt);
+System.out.println(d1);
+System.out.println(d2);
+```
+```
+=> 2025-05-12T21:50:14.3727556623
+=> 2025-05-12T21:50:14.3727556623
+```
+Creating Zoned Date Time:
+```
+ZoneId zone = ZoneId.of("Europe/Zagreb");
+ZonedDateTime zdt = ZonedDateTime.of(2025, Month.MAY, 12, 21, 50, 14, 145, zone); 
+System.out.println(zdt);
+```
+```
+=> 2025-05-12T21:50:14.000000145+01:00[Europe/Zagreb]
+```
+For exam, you need to know how to convert between timezones:
+```
+2025-05-12T21:50:14.000000145+01:00[<zone>]
+=> GMT 2025-05-12 20:50:14 (because the +01:00 from GMT)
+2025-05-12T21:50:14.000000145-03:00[<zone>]
+=> GMT 2025-05-12 18:50:14 (because the -03:00 from GMT)  
+```
+<a name="methods-in-dates-and-times"></a>
+### Methods in Dates and Times
