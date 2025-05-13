@@ -1813,3 +1813,91 @@ For exam, you need to know how to convert between timezones:
 ```
 <a name="methods-in-dates-and-times"></a>
 ### Methods in Dates and Times
+- LocalDate, LocalDateTime
+  - `plusYears()`, `plusMonths()`, `plusWeeks()`, `plusDays()` 
+  - `minusYears()`, `minusMonths()`, `minusWeeks()`, `minusDays()` 
+  
+
+- LocalTime, LocalDateTime
+  - `plusDays()`, `plusMinutes()`, `plusSeconds()`, `plusNanos()`
+  - `minusDays()`, `minusMinutes()`, `minusSeconds()`, `minusNanos()` 
+
+```
+LocalDate date = LocalDate.of(2022, Month.NOVEMBER, 15);
+date = date.plusDays(4);
+System.out.println(date);
+
+date = date.plusWeeks(2);
+System.out.println(date);
+
+date = date.plusMonths(3);
+System.out.println(date);
+
+date = date.plusYears(1);
+System.out.println(date);
+```
+```
+=> 2022-11-15
+=> 2022-11-19
+=> 2022-12-03
+=> 2023-02-03
+=> 2024-02-03
+```
+```
+LocalDate date = LocalDate.of(2022, Month.NOVEMBER, 15);
+System.out.println(date);
+
+LocalTime time = LocalTime.of(17,30);
+System.out.println(time);
+
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+System.out.println(dateTime);
+
+dateTime = dateTime.plusDays(2);
+System.out.println(dateTime);
+
+dateTime = dateTime.plusHours(3);
+System.out.println(dateTime);
+
+dateTime = dateTime.plusSeconds(15);
+System.out.println(dateTime);
+
+//method chaining
+datetime = dateTime.minusDays(2).plusHours(3).minusSeconds(45);
+System.out.println(dateTime);
+```
+```
+=> 2022-11-15
+=> 17:30
+=> 2022-11-15T17:30
+=> 2022-11-17T20:30
+=> 2022-11-17T20:45
+=> 2022-11-15T23:00
+```
+**Date and time classes are immutable!**
+```
+LocalDate date = LocalDate.of(2022, Month.NOVEMBER, 15);
+System.out.println(date);
+
+date.plusDays(10); // date is immutable.
+System.out.println(date);
+
+date = date.plusDays(10); // fix
+System.out.println(date);
+```
+```
+=> 2022-11-15
+=> 2022-11-15
+=> 2022-11-25
+```
+- `isBefore()` and `isAfter()`:
+```
+LocalDate date1 = LocalDate.of(2022, Month.NOVEMBER, 15);
+LocalDate date2 = LocalDate.of(2022, Month.NOVEMBER, 16);
+System.out.println(date1.isBefore(date2));
+System.out.println(date1.isAfter(date2));
+```
+```
+=> true
+=> false
+```
