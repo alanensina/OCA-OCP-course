@@ -1901,3 +1901,162 @@ System.out.println(date1.isAfter(date2));
 => true
 => false
 ```
+
+<a name="period-duration-and-instant"></a>
+### Period, Duration and Instant 
+
+- Period
+  - Only with LocalDate and LocalDateTime
+
+```
+Period p1 = Period.ofYears(2);
+System.out.println(p1);
+
+Period p2 = Period.ofMonths(3);
+System.out.println(p2);
+
+Period p3 = Period.ofWeeks(1);
+System.out.println(p3);
+
+Period p4 = Period.ofDays(11);
+System.out.println(p4);
+
+Period p5 = Period.of(2, 0, 15);
+System.out.println(p5);
+```
+
+```
+=> P2Y
+=> P3M
+=> P7D
+=> P11D
+=> P2Y15D
+```
+
+- Periods are used with plus/minus on date
+
+```
+Period period = Period.of(1, 2, 5);
+LocalDate date = LocalDate.of(2022, 11, 20);
+date = date.plus(period);
+System.out.println(date);
+
+date = date.minus(period);
+System.out.println(date);
+```
+
+```
+=> 2023-01-25
+=> 2022-11-20
+```
+
+- Duration
+  - Only with LocalTime and LocalDateTime
+
+```
+Duration d1 = Duration.ofDays(3);
+System.out.println(d1);
+
+Duration d2 = Duration.ofHours(2);
+System.out.println(d2);
+
+Duration d3 = Duration.ofMinutes(45);
+System.out.println(d3);
+
+Duration d4 = Duration.ofSeconds(10);
+System.out.println(d4);
+
+Duration d5 = Duration.ofMillis(240);
+System.out.println(d5);
+
+Duration d6 = Duration.ofNanos(2503);
+System.out.println(d6);
+```
+
+```
+=> PT72H
+=> PT2H
+=> PT45M
+=> PT10S
+=> PT0.24S
+=> PT0.000002503s
+```
+
+- Using ChronoUnit
+
+```
+import java.time.*;
+import java.time.temporal.*;
+
+Duration d0 = Duration.of(3, ChronoUnit.HALF_DAYS); // PT36H
+Duration d1 = Duration.of(3, ChronoUnit.DAYS); // PT72H
+Duration d2 = Duration.of(2, ChronoUnit.HOURS); // PT2H
+Duration d3 = Duration.of(45, ChronoUnit.MINUTES); // PT45M
+Duration d4 = Duration.of(10, ChronoUnit.SECONDS); // PT10S
+Duration d5 = Duration.of(240, ChronoUnit.MILLIS); // PT0.24S
+Duration d6 = Duration.of(2503, ChronoUnit.NANNOS); // PT0.000002503s
+```
+- ChronoUnits can also be used to determine how far apart are two times:
+
+```
+LocalTime t1 = LocalTime.of(17, 30);
+LocalTime t2 = LocalTime.of(20, 45);
+System.out.println(ChronoUnit.HOURS.between(t1, t2));
+System.out.println(ChronoUnit.MINUTES.between(t1, t2));
+```
+```
+=> 3
+=> 195
+```
+
+- Durations are used with plus/minus on time
+
+```
+Duration duration = Duration.ofMinutes(45);
+LocalTime time = LocalTime.of(17,30);
+time = time.plus(duration);
+System.out.println(time);
+
+time = time.minus(duration);
+System.out.println(time);
+```
+
+```
+=> 18:15
+=> 17:30
+```
+
+- Instant
+  - Instants are used to record timestamps in the application
+
+```
+Instant now = Instant.now();
+System.out.println(now);
+
+// Example to measure duration of the process:
+
+Instant before = Instant.now();
+// ... some time consuming process...
+Instant after = Instant.now();
+
+Duration duration = Duration.between(before, after);
+System.out.println(duration);
+```
+
+```
+=> 2023-04-18T09:20:52.904935284Z
+=> 244 (milliseconds)
+```
+
+- Converting ZonedTimeDate to instant:
+
+```
+ZoneId zone = ZoneId.of("Europe/Zagreb");
+ZonedDateTime z = ZonedDateTime.of(2022, 11, 2, 21, 50, 14, 145, zone);
+Instant inst = z.toInstant();
+System.out.println(inst);
+```
+
+```
+=> 2022-11-02T20:50:14.000000145Z
+```
