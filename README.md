@@ -36,6 +36,7 @@
   * [Dates and times](#dates-and-times)
     * [Creating dates and times](#creating-dates-and-times)
     * [Methods in dates and times](#methods-in-dates-and-times)
+    * [Period, Duration and Instant](#period-duration-and-instant-)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
