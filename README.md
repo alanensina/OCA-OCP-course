@@ -37,6 +37,14 @@
     * [Creating dates and times](#creating-dates-and-times)
     * [Methods in dates and times](#methods-in-dates-and-times)
     * [Period, Duration and Instant](#period-duration-and-instant-)
+  * [Methods](#methods)
+    * [Defining methods](#defining-methods)
+    * [Local and instance variables](#local-and-instance-variables)
+    * [Variable arguments](#variable-arguments)
+    * [Access modifiers](#access-modifiers)
+    * [Static members](#static-members)
+    * [Boxing and unboxing](#boxing-and-unboxing)
+    * [Overloading methods](#overloading-methods)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -2061,3 +2069,397 @@ System.out.println(inst);
 ```
 => 2022-11-02T20:50:14.000000145Z
 ```
+
+<a name="methods"></a>
+## Methods
+
+In Java, a method is a block of code that performs a specific task. You can think of a method as a function or a behavior that belongs to a class or an object.
+
+Key Points About Methods in Java:
+Defined inside a class.
+
+Can take input (parameters) and return a value (or not, if declared void).
+
+Help with code reuse — you can call a method multiple times without rewriting code.
+
+<a name="defining-methods"></a>
+### Defining methods
+
+```declarative
+returnType methodName(parameters) {
+    // method body
+    // statements
+    return value; // if returnType is not void
+}
+```
+
+```declarative
+public class Calculator {
+
+  // A method that adds two integers and returns the result
+  public int add(int a, int b) {
+      return a + b;
+  }
+
+  // A method that prints a greeting message
+  public void greet() {
+      System.out.println("Hello!");
+  }
+}
+```
+```declarative
+public class Main {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();  // Create an object of Calculator
+
+        int result = calc.add(5, 3);         // Call the add method
+        System.out.println(result);          // Output: 8
+
+        calc.greet();                        // Call the greet method
+        // Output: Hello!
+    }
+}
+```
+
+<a name="local-and-instance-variables"></a>
+### Local and instance variables
+Local variables and instance variables are both used to store data, but they differ in where they are declared, how long they live, and how they are accessed.
+
+#### Local Variables
+  - Definition:
+    - A local variable is declared inside a method, constructor, or block, and it is only accessible within that method or block.
+
+#### Key Features:
+
+- Created when the method is called.
+- Destroyed when the method finishes.
+- Must be initialized before use.
+- Not accessible outside the method.
+
+```declarative
+public void printSum() {
+    int a = 5;           // local variable
+    int b = 10;          // local variable
+    System.out.println(a + b); // 15
+}
+```
+
+#### Instance Variables
+  - Definition:
+    - An instance variable is declared inside a class but outside any method, and it belongs to an object (instance) of the class.
+
+#### Key Features:
+
+- Have default values (e.g., 0 for int, null for objects).
+- Exist as long as the object exists.
+- Accessed using this.variableName (or just variableName inside the class).
+- Each object gets its own copy of instance variables.
+
+```declarative
+public class Person {
+    // Instance variables
+    String name;
+    int age;
+
+    public void sayHello() {
+        System.out.println("Hi, I'm " + name + " and I'm " + age + " years old.");
+    }
+}
+```
+
+```declarative
+Person p1 = new Person();
+p1.name = "Alice";
+p1.age = 30;
+p1.sayHello(); // Output: Hi, I'm Alice and I'm 30 years old.
+```
+
+| Feature       | Local Variable          | Instance Variable                |
+| ------------- | ----------------------- | -------------------------------- |
+| Declared in   | Method/block            | Inside class (outside methods)   |
+| Scope         | Within method/block     | Whole class                      |
+| Lifetime      | During method execution | As long as the object exists     |
+| Default Value | None (must initialize)  | Yes (e.g., 0, null)              |
+| Accessed by   | Name only               | `this.variableName` or just name |
+
+
+<a name="variable-arguments"></a>
+### Variable arguments
+
+In Java, variable arguments (or varargs) allow you to pass a variable number of arguments to a method — meaning, the method can accept zero or more arguments of a specified type.
+
+This is useful when you don’t know ahead of time how many arguments will be passed to a method.
+
+- The ellipsis (...) means “variable number of.”
+- The varargs parameter is treated like an array inside the method.
+- You can only have one varargs parameter, and it must be the last parameter in the method.
+
+```declarative
+public class MathUtils {
+
+    // A method that takes any number of int arguments
+    public int sum(int... numbers) {
+        int total = 0;
+        for (int num : numbers) {
+            total += num;
+        }
+        return total;
+    }
+}
+```
+
+```declarative
+public class Main {
+    public static void main(String[] args) {
+        MathUtils utils = new MathUtils();
+
+        System.out.println(utils.sum());            // Output: 0
+        System.out.println(utils.sum(5));           // Output: 5
+        System.out.println(utils.sum(1, 2, 3, 4));   // Output: 10
+    }
+}
+```
+
+🛑 Rules:
+Only one varargs parameter per method.
+
+It must be the last parameter.
+
+```declarative
+// Valid
+void printNames(String... names) { }
+
+// Invalid - varargs must be last
+// void test(int... numbers, String label) { }
+```
+
+<a name="access-modifiers"></a>
+### Access modifiers
+
+Access modifiers are keywords used to set the visibility (access level) of classes, methods, constructors, and variables. They determine who can access what in your code — which is essential for encapsulation and security in object-oriented programming.
+
+| Modifier                | Access Level                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------- |
+| `public`                | Accessible **from anywhere**                                                          |
+| `private`               | Accessible **only within the same class**                                             |
+| `protected`             | Accessible **within the same package** and by **subclasses** (even in other packages) |
+| *default* (no modifier) | Accessible **only within the same package**                                           |
+
+| Modifier    | Same Class | Same Package | Subclass (other package) | Other Classes |
+| ----------- | ---------- | ------------ | ------------------------ | ------------- |
+| `public`    | ✅          | ✅            | ✅                        | ✅             |
+| `protected` | ✅          | ✅            | ✅                        | ❌             |
+| *default*   | ✅          | ✅            | ❌                        | ❌             |
+| `private`   | ✅          | ❌            | ❌                        | ❌             |
+
+
+<a name="static-members"></a>
+### Static members
+
+Static members refer to fields (variables) and methods that belong to the class itself, rather than to any specific instance (object) of that class.
+
+#### What is a Static Member?
+- Declared using the static keyword.
+- Shared across all instances of the class.
+- Can be accessed without creating an object of the class.
+- Useful for utility methods, constants, and class-level variables.
+
+#### Static Variable (Field)
+A static variable is shared among all objects of a class. All instances see the same value.
+
+
+```declarative
+public class Counter {
+    static int count = 0; // static variable
+
+    public Counter() {
+        count++; // increase when an object is created
+    }
+
+    public void showCount() {
+        System.out.println("Count: " + count);
+    }
+}
+```
+
+```declarative
+Counter c1 = new Counter();
+Counter c2 = new Counter();
+c1.showCount();  // Output: Count: 2
+```
+
+#### Static Method
+A static method can be called without creating an object. It can only access static data directly.
+
+```declarative
+public class MathUtils {
+    public static int square(int x) {
+        return x * x;
+    }
+}
+```
+
+```declarative
+int result = MathUtils.square(5); // No object needed
+System.out.println(result);       // Output: 25
+```
+
+#### Static Block
+A static block is used for static initialization — it runs once when the class is loaded.
+
+```declarative
+public class Example {
+    static {
+        System.out.println("Static block called");
+    }
+
+    public static void sayHi() {
+        System.out.println("Hi!");
+    }
+}
+```
+
+#### Static Class (Nested)
+Only nested classes can be static.
+
+```declarative
+public class Outer {
+    static class Nested {
+        void display() {
+            System.out.println("Inside static nested class");
+        }
+    }
+}
+```
+
+```declarative
+Outer.Nested obj = new Outer.Nested();
+obj.display();
+```
+
+| Feature      | Static                 | Non-Static (Instance)            |
+| ------------ | ---------------------- | -------------------------------- |
+| Belongs to   | Class                  | Object                           |
+| Accessed via | Class name             | Object reference                 |
+| Memory       | Loaded once            | New copy for each object         |
+| Can access   | Only static members    | Both static and instance members |
+| Used for     | Utilities, shared data | Object-specific behavior         |
+
+<a name="boxing-and-unboxing"></a>
+### Boxing and unboxing
+
+Boxing and unboxing are mechanisms that deal with the conversion between primitive types (like `int`, `char`, `double`) and their wrapper classes (like `Integer`, `Character`, `Double`).
+
+
+#### Boxing
+Boxing is the process of converting a primitive type into its corresponding wrapper class object.
+
+```declarative
+int num = 10;
+Integer boxedNum = Integer.valueOf(num); // Boxing
+Integer boxed = num; // Autoboxing
+```
+
+#### Unboxing
+Unboxing is the process of converting a wrapper class object back into its corresponding primitive type.
+
+```declarative
+Integer boxedNum = Integer.valueOf(20);
+int unboxed = boxedNum.intValue(); // Unboxing
+int unboxed = boxedNum; // Auto-unboxing
+```
+
+#### Why Do We Need Boxing/Unboxing?
+To use primitives in places where objects are required, like:
+
+- Collections (`ArrayList`, `HashMap`, etc.)
+- Generics
+- Some frameworks (like Spring)
+
+```declarative
+List<Integer> numbers = new ArrayList<>();
+numbers.add(5); // Autoboxing from int to Integer
+int x = numbers.get(0); // Auto-unboxing from Integer to int
+```
+
+| Primitive | Wrapper Class |
+| --------- | ------------- |
+| `byte`    | `Byte`        |
+| `short`   | `Short`       |
+| `int`     | `Integer`     |
+| `long`    | `Long`        |
+| `float`   | `Float`       |
+| `double`  | `Double`      |
+| `char`    | `Character`   |
+| `boolean` | `Boolean`     |
+
+| Process       | Description                        | Example                            |
+| ------------- | ---------------------------------- | ---------------------------------- |
+| Boxing        | Primitive → Wrapper                | `Integer i = Integer.valueOf(10);` |
+| Autoboxing    | Automatically done by the compiler | `Integer i = 10;`                  |
+| Unboxing      | Wrapper → Primitive                | `int x = i.intValue();`            |
+| Auto-unboxing | Automatically done by the compiler | `int x = i;`                       |
+
+
+<a name="overloading-methods"></a>
+### Overloading methods
+
+Method overloading means defining multiple methods with the same name but with different parameter lists (number, type, or order of parameters) within the same class.
+
+- Why Use Method Overloading?
+  - Improves code readability and reusability.
+  - Lets you use the same method name to perform similar tasks with different inputs.
+
+- Rules for Method Overloading:
+  - Methods must have the same name.
+  - Methods must have different parameter lists:
+    - Different number of parameters.
+    - Different types of parameters.
+    - Different order of parameters (if types differ).
+
+Overloading is resolved at compile time — it's a form of compile-time polymorphism.
+
+```declarative
+public class Calculator {
+
+    // Method to add two integers
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // Method to add three integers
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // Method to add two doubles
+    public double add(double a, double b) {
+        return a + b;
+    }
+}
+```
+
+```declarative
+Calculator calc = new Calculator();
+
+System.out.println(calc.add(2, 3));         // Output: 5
+System.out.println(calc.add(2, 3, 4));      // Output: 9
+System.out.println(calc.add(2.5, 3.7));     // Output: 6.2
+```
+
+#### What Doesn’t Count as Overloading:
+Different return types only (without changing parameters) is NOT overloading — it causes a compile-time error.
+
+```declarative
+// INVALID
+int add(int a, int b) { return a + b; }
+// double add(int a, int b) { return a + b; } ❌ Compile-time error
+```
+
+| Feature         | Method Overloading               |
+| --------------- | -------------------------------- |
+| Based on        | Method name + parameter list     |
+| Return type     | Can be same or different         |
+| Access modifier | Can be same or different         |
+| When resolved   | At compile time (static binding) |
+| Benefit         | Cleaner and more intuitive APIs  |
