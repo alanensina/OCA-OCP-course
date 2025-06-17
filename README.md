@@ -45,6 +45,11 @@
     * [Static members](#static-members)
     * [Boxing and unboxing](#boxing-and-unboxing)
     * [Overloading methods](#overloading-methods)
+  * [Class design](#methods)
+    * [Inheritance](#inheritance)
+    * [Using this and super](#using-this-and-super)
+    * [Initializing objects](#initializing-objects)
+    * [Inheriting members](#inheriting-members)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -2463,3 +2468,185 @@ int add(int a, int b) { return a + b; }
 | Access modifier | Can be same or different         |
 | When resolved   | At compile time (static binding) |
 | Benefit         | Cleaner and more intuitive APIs  |
+
+
+<a name="class-design"></a>
+## Class design
+
+In Java, class design refers to the process of defining the structure and behavior of a class, which is a blueprint for creating objects in object-oriented programming (OOP).
+
+<a name="inheritance"></a>
+### Inheritance
+
+Inheritance is a fundamental concept in object-oriented programming (OOP), including Java. It allows one class (called a subclass or child class) to inherit properties and behaviors (fields and methods) from another class (called a superclass or parent class).
+
+#### Why Use Inheritance?
+- Code reuse: Avoid duplicating code by reusing common functionality.
+- Extensibility: Add or override features in subclasses without modifying the base class.
+- Polymorphism: Use parent class references to refer to child class objects.
+
+```declarative
+class Animal {
+    void eat() {
+        System.out.println("This animal eats food.");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("The dog barks.");
+    }
+}
+```
+
+In this example:
+
+- `Dog` is the subclass.
+- `Animal` is the superclass.
+- `Dog` inherits the `eat()` method from `Animal`.
+
+You can now do:
+
+```declarative
+Dog dog = new Dog();
+dog.eat();  // Inherited from Animal
+dog.bark(); // Defined in Dog
+```
+
+#### Types of Inheritance in Java
+Java supports the following types:
+- Single Inheritance (One class inherits from one superclass)
+- Multilevel Inheritance (A class inherits from a class which itself inherits from another)
+- Hierarchical Inheritance (Multiple subclasses inherit from the same superclass)
+
+🛑 Note: Java does not support multiple inheritance with classes to avoid ambiguity (like the "diamond problem"), but it allows it via interfaces.
+
+<a name="using-this-and-super"></a>
+### Using this and super
+
+In Java, `this()` and `super()` are special constructor calls used within class constructors to initialize objects properly. They help in managing inheritance and constructor chaining.
+
+#### `this()` — Call to Another Constructor in the Same Class
+- Used to call another constructor from within the same class.
+- Helps to avoid code duplication.
+- Must be the first statement in the constructor.
+
+```declarative
+class Person {
+    private String name;
+    private int age;
+
+    // Constructor with two parameters
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Constructor with one parameter
+    public Person(String name) {
+        this(name, 0);  // calls the other constructor
+    }
+}
+```
+
+#### `super()` — Call to Constructor of the Parent Class
+- Used to call a constructor in the superclass (parent class).
+- Helps initialize inherited fields properly.
+- Also must be the first statement in the constructor.
+
+```declarative
+class Animal {
+    Animal(String type) {
+        System.out.println("Animal type: " + type);
+    }
+}
+
+class Dog extends Animal {
+    Dog() {
+        super("Dog");  // calls Animal(String) constructor
+        System.out.println("Dog is created");
+    }
+}
+```
+#### Rules to Remember
+- Both `this()` and `super()` must be the first line in the constructor.
+- You cannot use both `this()` and `super()` in the same constructor — only one can be the first line.
+
+| Keyword   | Purpose                                 | Calls From           | Calls To                              |
+| --------- | --------------------------------------- | -------------------- | ------------------------------------- |
+| `this()`  | Calls another constructor in same class | Within a constructor | Another constructor in the same class |
+| `super()` | Calls a constructor of the superclass   | Within a constructor | Constructor of the parent class       |
+
+
+<a name="initializing-objects"></a>
+### Initializing objects
+
+Order of initialization:
+
+| Phase                       | When It Happens                             | Scope        |
+|-----------------------------|---------------------------------------------| ------------ |
+| Super class (if available)  | If a super class is available, starts first | Class-level  |
+| Static variables            | When class is first loaded                  | Class-level  |
+| Static blocks               | After static variables (in order)           | Class-level  |
+| Instance variables          | When object is created (after super)        | Object-level |
+| Instance initializer blocks | After instance variables                    | Object-level |
+| Constructors                | Last step of object creation                | Object-level |
+
+🔹 Special Notes
+- Superclass is always initialized before subclass.
+- Static blocks and static variables are only run once per class, even if multiple objects are created.
+- Initialization order matters — if a static block comes before a static variable, it won’t see the variable initialized yet.
+
+<a name="inheriting-members"></a>
+### Inheriting members
+
+In Java, inheriting members means that a subclass (child class) automatically gets access to the fields (variables) and methods of its superclass (parent class) — unless they are private or otherwise restricted.
+
+#### What Members Are Inherited?
+✅ Inherited:
+- Public and protected fields and methods
+- Package-private (default access) members — only if the subclass is in the same package
+
+❌ Not Inherited:
+- Private members
+- Constructors (but they can be called using `super()`)
+
+```declarative
+class Animal {
+    protected String name;
+
+    public void eat() {
+        System.out.println("This animal eats food.");
+    }
+}
+
+class Dog extends Animal {
+    public void bark() {
+        System.out.println("The dog barks.");
+    }
+}
+```
+
+```declarative
+Dog d = new Dog();
+d.name = "Buddy";    // Inherited field
+d.eat();             // Inherited method
+d.bark();            // Dog's own method
+```
+
+| Modifier      | Inherited? | Accessible in Subclass?      |
+| ------------- | ---------- | ---------------------------- |
+| `public`      | Yes        | Yes                          |
+| `protected`   | Yes        | Yes (even in other packages) |
+| (no modifier) | Yes        | Yes (only in same package)   |
+| `private`     | ❌ No       | No                           |
+
+
+| Member Type     | Inherited by Subclass? | Usable in Subclass? |
+| --------------- | ---------------------- | ------------------- |
+| Public Field    | ✅ Yes                  | ✅ Yes               |
+| Protected Field | ✅ Yes                  | ✅ Yes               |
+| Private Field   | ❌ No                   | ❌ No                |
+| Public Method   | ✅ Yes                  | ✅ Yes               |
+| Constructor     | ❌ No (but callable)    | ✅ With `super()`    |
+
