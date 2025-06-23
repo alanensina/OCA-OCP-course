@@ -50,6 +50,9 @@
     * [Using this and super](#using-this-and-super)
     * [Initializing objects](#initializing-objects)
     * [Inheriting members](#inheriting-members)
+  * [Abstract Classes & Interface](#abstract-classes-and-interfaces)
+    * [Abstract Classes](#abstract-classes)
+    * [Interfaces](#interfaces)
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -2650,3 +2653,124 @@ d.bark();            // Dog's own method
 | Public Method   | ✅ Yes                  | ✅ Yes               |
 | Constructor     | ❌ No (but callable)    | ✅ With `super()`    |
 
+<a name="abstract-classes-and-interfaces"></a>
+## Abstract Classes & Interface
+
+<a name="abstract-classes"></a>
+### Abstract Classes
+
+**Abstract classes** are classes that cannot be instantiated on their own and are meant to be extended by other classes. They are used to define a common base for a group of related classes, often with some shared code and some abstract behavior that subclasses must implement.
+
+#### Key Features of Abstract Classes
+Declared using the `abstract` keyword:
+
+```declarative
+abstract class Animal {
+    abstract void makeSound(); // abstract method
+    void sleep() {
+        System.out.println("Sleeping...");
+    }
+}
+```
+
+- Can have both abstract and non-abstract methods:
+  - Abstract method: No body, only declaration.
+  - Non-abstract method: Has an implementation.
+- Cannot be instantiated:
+  - You can't create an object like `new Animal()`; if Animal is `abstract`.
+- Used for inheritance:
+  - Other classes must `extend` the abstract class and implement all abstract methods.
+
+```declarative
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Bark");
+    }
+}
+```
+
+✅ When to Use Abstract Classes
+- When you have **common behavior** to share among subclasses.
+- When you want to **partially define a template** for other classes to follow.
+- When you need **shared state or constructors**.
+
+🔸 Abstract vs Interface
+
+| Feature      | Abstract Class               | Interface                                           |
+| ------------ | ---------------------------- | --------------------------------------------------- |
+| Methods      | Can have abstract & concrete | All methods are abstract by default (until Java 8+) |
+| Constructors | Can have constructors        | Cannot have constructors                            |
+| Inheritance  | Single inheritance           | Can implement multiple interfaces                   |
+| Variables    | Can have instance variables  | Variables are `public static final`                 |
+
+
+<a name="interfaces"></a>
+### Interfaces
+
+**Interface** is a blueprint for a class. It is a reference type similar to a class, but it can only contain:
+
+- **Abstract methods** (until Java 8),
+- **Constants** (public static final variables),
+- And from Java 8 onwards, it can also include **default** and **static methods**,
+- From Java 9, **private methods** are also allowed.
+
+#### Why Use Interfaces?
+Interfaces are used to:
+
+- Achieve abstraction.
+- Support multiple inheritance (which is not possible with classes).
+- Define a contract that implementing classes must fulfill.
+
+#### Key Points about Interfaces
+
+| Feature                  | Details                                                               |
+| ------------------------ | --------------------------------------------------------------------- |
+| Declaration              | Use the `interface` keyword                                           |
+| Implementation           | Use the `implements` keyword in the class                             |
+| Method Type              | All methods are **public** and **abstract** by default (until Java 8) |
+| Variables                | All variables are **public static final** (i.e., constants)           |
+| Multiple Interfaces      | A class can implement **multiple interfaces**                         |
+| Default Methods (Java 8) | Can have method bodies with `default` keyword                         |
+| Static Methods (Java 8)  | Interfaces can have static methods                                    |
+
+#### Syntax Example
+
+```declarative
+interface Animal {
+    void makeSound();  // abstract method
+}
+```
+A class that implements the interface must define all its methods:
+
+```declarative
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Bark");
+    }
+}
+```
+
+Interface Example with Default Method:
+
+```declarative
+interface Animal {
+    void makeSound();  // abstract method
+
+    default void sleep() {
+        System.out.println("Sleeping...");
+    }
+}
+```
+
+```declarative
+class Cat implements Animal {
+    public void makeSound() {
+        System.out.println("Meow");
+    }
+}
+```
+
+#### When to Use an Interface
+- When you want to enforce a contract without worrying about implementation.
+- When you want to allow a class to inherit behavior from multiple sources (via multiple interfaces).
+- When you expect that unrelated classes will implement the interface in different ways.
