@@ -50,9 +50,16 @@
     * [Using this and super](#using-this-and-super)
     * [Initializing objects](#initializing-objects)
     * [Inheriting members](#inheriting-members)
-  * [Abstract Classes & Interface](#abstract-classes-and-interfaces)
+  * [Abstract Classes and Interfaces](#abstract-classes-and-interfaces)
     * [Abstract Classes](#abstract-classes)
     * [Interfaces](#interfaces)
+  * [Lambda and Functional programming](#lambda-and-functional-programming)
+    * [Functional interfaces](#functional-interfaces)
+    * [Method references](#method-references)
+    * [Built-in Functional Interfaces](#built-in-functional-interfaces)
+    * [Combining implementations](#combining-implementations)
+    * [Functional interfaces for primitives](#functional-interfaces-for-primitives)
+
 
 <a name="oca-ocp-course"></a>
 # OCA-OCP COURSE
@@ -2654,7 +2661,7 @@ d.bark();            // Dog's own method
 | Constructor     | ❌ No (but callable)    | ✅ With `super()`    |
 
 <a name="abstract-classes-and-interfaces"></a>
-## Abstract Classes & Interface
+## Abstract Classes and Interfaces
 
 <a name="abstract-classes"></a>
 ### Abstract Classes
@@ -2774,3 +2781,371 @@ class Cat implements Animal {
 - When you want to enforce a contract without worrying about implementation.
 - When you want to allow a class to inherit behavior from multiple sources (via multiple interfaces).
 - When you expect that unrelated classes will implement the interface in different ways.
+
+<a name="lambda-and-functional-programming"></a>
+## Lambda and Functional programming
+
+<a name="functional-interfaces"></a>
+### Functional interfaces
+
+#### What is a Functional Interface?
+A functional interface is an interface that contains exactly one abstract method. It can have default or static methods, but only one method that is abstract (i.e., not implemented).
+It is the foundation of lambda expressions in Java.
+
+#### Why Functional Interfaces?
+They allow us to:
+
+- Represent a function as an object (functional programming concept).
+- Use **lambda expressions** or **method references**.
+- Write cleaner and more concise code.
+
+#### How to Define a Functional Interface
+
+```declarative
+@FunctionalInterface
+interface MyFunction {
+    void apply();  // Only one abstract method
+}
+```
+The `@FunctionalInterface` annotation is optional but recommended. It tells the compiler to ensure that the interface has only one abstract method.
+
+```declarative
+@FunctionalInterface
+interface Greeting {
+    void sayHello();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Greeting greet = () -> System.out.println("Hello!");
+        greet.sayHello();  // Output: Hello!
+    }
+}
+```
+#### Common Built-in Functional Interfaces (Java 8+)
+Java provides many ready-to-use functional interfaces in the `java.util.function` package. Here are some important ones:
+
+| Interface             | Abstract Method Signature | Use Case                       |
+| --------------------- | ------------------------- | ------------------------------ |
+| `Function<T, R>`      | `R apply(T t)`            | Takes T and returns R          |
+| `Predicate<T>`        | `boolean test(T t)`       | Checks a condition             |
+| `Consumer<T>`         | `void accept(T t)`        | Consumes a value, no return    |
+| `Supplier<T>`         | `T get()`                 | Provides a value, no input     |
+| `BiFunction<T, U, R>` | `R apply(T t, U u)`       | Takes two inputs and returns R |
+
+#### Example: Using `Function<T, R>`
+
+```declarative
+Function<Integer, String> converter = (num) -> "Number: " + num;
+System.out.println(converter.apply(5));  // Output: Number: 5
+```
+
+#### Summary
+- A functional interface has exactly **one** abstract method.
+- It can be used with **lambda expressions** and method references.
+- Java provides many **built-in** functional interfaces for common use cases.
+- Use the `@FunctionalInterface` annotation to enforce correct usage.
+
+<a name="method-references"></a>
+### Method references
+
+A method reference is a shorthand notation for a lambda expression that calls an existing method. It lets you refer to a method by name instead of writing the method body.
+
+#### Syntax of Method References
+There are four types of method references:
+
+| Type                         | Syntax                      | Example               |
+| ---------------------------- | --------------------------- | --------------------- |
+| **Static method**            | `ClassName::staticMethod`   | `Math::abs`           |
+| **Instance method (object)** | `object::instanceMethod`    | `System.out::println` |
+| **Instance method (class)**  | `ClassName::instanceMethod` | `String::toLowerCase` |
+| **Constructor reference**    | `ClassName::new`            | `ArrayList::new`      |
+
+#### Using Method References with Functional Interfaces
+
+- Static Method Reference
+
+```declarative
+@FunctionalInterface
+interface Converter {
+    int convert(String s);
+}
+
+public class Main {
+    public static int stringToInt(String s) {
+        return Integer.parseInt(s);
+    }
+
+    public static void main(String[] args) {
+        Converter converter = Main::stringToInt;
+        System.out.println(converter.convert("123"));  // Output: 123
+    }
+}
+```
+
+- Instance Method Reference (of an object)
+
+```declarative
+@FunctionalInterface
+interface Printer {
+    void print(String s);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Printer printer = System.out::println;
+        printer.print("Hello Method Reference!");  // Output: Hello Method Reference!
+    }
+}
+```
+
+- Instance Method Reference (of a class)
+
+```declarative
+@FunctionalInterface
+interface StringProcessor {
+    String process(String s);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        StringProcessor processor = String::toUpperCase;
+        System.out.println(processor.process("hello"));  // Output: HELLO
+    }
+}
+```
+Here, `String::toUpperCase` means "call `toUpperCase()` on the argument passed to the method."
+
+- Constructor Reference
+
+```declarative
+@FunctionalInterface
+interface Creator {
+    StringBuilder create();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Creator creator = StringBuilder::new;
+        System.out.println(creator.create().append("Hello"));  // Output: Hello
+    }
+}
+```
+
+#### Summary
+- Method references are a clean, concise alternative to lambdas.
+- You can use them with functional interfaces where the method signature matches the interface's abstract method.
+- They're especially useful when you're just calling an existing method.
+
+
+
+<a name="built-in-functional-interfaces"></a>
+### Built-in Functional Interfaces
+
+**Built-in functional interfaces** are interfaces that are part of the `java.util.function` package and are designed to support lambda expressions and functional-style programming, introduced in Java 8.
+
+A functional interface is an interface with only one abstract method (though it can have default or static methods). These interfaces can be used as the target type for a **lambda expression or method reference**.
+
+#### Common Built-in Functional Interfaces
+
+| Interface             | Method Signature        | Description                                                                |
+| --------------------- | ----------------------- | -------------------------------------------------------------------------- |
+| `Function<T, R>`      | `R apply(T t)`          | Takes an input `T` and returns a result `R`.                               |
+| `Consumer<T>`         | `void accept(T t)`      | Takes an input `T` and returns nothing. Used for performing operations.    |
+| `Supplier<T>`         | `T get()`               | Takes no input and returns a result `T`.                                   |
+| `Predicate<T>`        | `boolean test(T t)`     | Takes an input `T` and returns a boolean (used for filtering or matching). |
+| `BiFunction<T, U, R>` | `R apply(T t, U u)`     | Takes two inputs and returns a result.                                     |
+| `BiConsumer<T, U>`    | `void accept(T t, U u)` | Takes two inputs and returns nothing.                                      |
+| `UnaryOperator<T>`    | `T apply(T t)`          | A specialization of `Function` where input and output are the same type.   |
+| `BinaryOperator<T>`   | `T apply(T t1, T t2)`   | A specialization of `BiFunction` where all types are the same.             |
+
+#### Example
+
+```declarative
+import java.util.function.*;
+
+public class FunctionalExample {
+    public static void main(String[] args) {
+        // Function
+        Function<String, Integer> lengthFunction = s -> s.length();
+        System.out.println(lengthFunction.apply("Hello")); // 5
+
+        // Predicate
+        Predicate<Integer> isPositive = x -> x > 0;
+        System.out.println(isPositive.test(10)); // true
+
+        // Consumer
+        Consumer<String> print = s -> System.out.println("Hello " + s);
+        print.accept("World"); // Hello World
+
+        // Supplier
+        Supplier<Double> randomSupplier = () -> Math.random();
+        System.out.println(randomSupplier.get());
+    }
+}
+```
+
+#### Use Cases
+These interfaces are heavily used in:
+- Streams API
+- Optional API
+- Lambdas and method references
+
+<a name="combining-implementations"></a>
+### Combining implementations
+
+You can combine built-in functional interfaces in Java to build more complex behaviors. This is a powerful feature of Java's functional programming capabilities. Many interfaces in the `java.util.function` package provide default methods for composition.
+
+#### Examples of Combining Functional Interfaces
+- Function Composition
+
+`Function<T, R>` provides:
+
+- `andThen(Function<R, V>)`: Applies this function first, then the andThen function.
+- `compose(Function<V, T>)`: Applies the compose function first, then this one.
+
+```declarative
+Function<String, String> trim = String::trim;
+Function<String, String> toUpper = String::toUpperCase;
+
+// Combine: trim first, then convert to upper case
+Function<String, String> trimAndUpper = trim.andThen(toUpper);
+
+System.out.println(trimAndUpper.apply("   hello   ")); // "HELLO"
+```
+
+- Chaining Consumers
+
+`Consumer<T>` provides:
+
+- `andThen(Consumer<? super T>)`: Executes one consumer after another.
+
+```declarative
+Consumer<String> print = s -> System.out.println("Print: " + s);
+Consumer<String> printLength = s -> System.out.println("Length: " + s.length());
+
+Consumer<String> combined = print.andThen(printLength);
+combined.accept("Java"); 
+// Output:
+// Print: Java
+// Length: 4
+```
+- Combining Predicates
+
+`Predicate<T>` provides:
+
+- `and(Predicate)`
+- `or(Predicate)`
+- `negate()`
+
+```declarative
+Predicate<String> isNotEmpty = s -> !s.isEmpty();
+Predicate<String> isLongerThan3 = s -> s.length() > 3;
+
+Predicate<String> complexCheck = isNotEmpty.and(isLongerThan3);
+
+System.out.println(complexCheck.test("Hi"));     // false
+System.out.println(complexCheck.test("Hello"));  // true
+```
+
+- BinaryOperator with Comparator
+
+You can use `BinaryOperator<T>` with `Comparator<T>` to create min/max selectors:
+
+```declarative
+import java.util.Comparator;
+import java.util.function.BinaryOperator;
+
+Comparator<Integer> comparator = Integer::compareTo;
+BinaryOperator<Integer> maxBy = BinaryOperator.maxBy(comparator);
+
+System.out.println(maxBy.apply(10, 20)); // 20
+```
+
+#### Summary of Composition Methods
+
+| Interface        | Methods for Composition     |
+| ---------------- | --------------------------- |
+| `Function`       | `andThen()`, `compose()`    |
+| `Consumer`       | `andThen()`                 |
+| `Predicate`      | `and()`, `or()`, `negate()` |
+| `BinaryOperator` | `maxBy()`, `minBy()`        |
+
+
+<a name="Functional-interfaces-for-primitives"></a>
+### Functional interfaces for primitives
+
+In Java, to improve performance and avoid boxing/unboxing overhead, there are primitive-specific functional interfaces for commonly used types like int, long, and double. These are located in the same package: `java.util.function`.
+
+#### Why Use Primitive Functional Interfaces?
+Using generic types like `Function<Integer, Integer>` causes **autoboxing**, which is less efficient. Primitive functional interfaces directly use primitive types, avoiding this overhead.
+
+#### Categories of Primitive Functional Interfaces
+
+- Function Variants
+
+| Interface             | Method Signature            | Description                   |
+| --------------------- | --------------------------- | ----------------------------- |
+| `IntFunction<R>`      | `R apply(int value)`        | Takes `int`, returns `R`      |
+| `LongFunction<R>`     | `R apply(long value)`       | Takes `long`, returns `R`     |
+| `DoubleFunction<R>`   | `R apply(double value)`     | Takes `double`, returns `R`   |
+| `ToIntFunction<T>`    | `int applyAsInt(T t)`       | Takes `T`, returns `int`      |
+| `ToLongFunction<T>`   | `long applyAsLong(T t)`     | Takes `T`, returns `long`     |
+| `ToDoubleFunction<T>` | `double applyAsDouble(T t)` | Takes `T`, returns `double`   |
+| `IntToDoubleFunction` | `double applyAsDouble(int)` | Takes `int`, returns `double` |
+| `IntToLongFunction`   | `long applyAsLong(int)`     | Takes `int`, returns `long`   |
+
+- Predicate Variants
+
+| Interface         | Method Signature       | Description            |
+| ----------------- | ---------------------- | ---------------------- |
+| `IntPredicate`    | `boolean test(int)`    | Tests an `int` value   |
+| `LongPredicate`   | `boolean test(long)`   | Tests a `long` value   |
+| `DoublePredicate` | `boolean test(double)` | Tests a `double` value |
+
+- Consumer Variants
+
+| Interface           | Method Signature              | Description                  |
+| ------------------- | ----------------------------- | ---------------------------- |
+| `IntConsumer`       | `void accept(int)`            | Consumes an `int` value      |
+| `LongConsumer`      | `void accept(long)`           | Consumes a `long` value      |
+| `DoubleConsumer`    | `void accept(double)`         | Consumes a `double` value    |
+| `ObjIntConsumer<T>` | `void accept(T t, int value)` | Takes an object and an `int` |
+
+- Supplier Variants
+
+| Interface        | Method Signature       | Description         |
+| ---------------- | ---------------------- | ------------------- |
+| `IntSupplier`    | `int getAsInt()`       | Supplies an `int`   |
+| `LongSupplier`   | `long getAsLong()`     | Supplies a `long`   |
+| `DoubleSupplier` | `double getAsDouble()` | Supplies a `double` |
+
+- Unary/Binary Operator Variants
+
+| Interface              | Method Signature                       | Description            |
+| ---------------------- | -------------------------------------- | ---------------------- |
+| `IntUnaryOperator`     | `int applyAsInt(int operand)`          | Operates on one `int`  |
+| `LongUnaryOperator`    | `long applyAsLong(long)`               | Operates on one `long` |
+| `DoubleUnaryOperator`  | `double applyAsDouble(double)`         | One `double`           |
+| `IntBinaryOperator`    | `int applyAsInt(int, int)`             | Operates on two `int`s |
+| `LongBinaryOperator`   | `long applyAsLong(long, long)`         | Two `long`s            |
+| `DoubleBinaryOperator` | `double applyAsDouble(double, double)` | Two `double`s          |
+
+#### Example: Using Primitive Functional Interfaces
+
+```declarative
+import java.util.function.*;
+
+public class PrimitiveFunctionalExample {
+    public static void main(String[] args) {
+        IntPredicate isEven = x -> x % 2 == 0;
+        System.out.println(isEven.test(4)); // true
+
+        IntUnaryOperator square = x -> x * x;
+        System.out.println(square.applyAsInt(5)); // 25
+
+        ToDoubleFunction<String> lengthAsDouble = s -> s.length() * 1.0;
+        System.out.println(lengthAsDouble.applyAsDouble("Java")); // 4.0
+    }
+}
+```
