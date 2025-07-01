@@ -59,6 +59,13 @@
     * [Built-in Functional Interfaces](#built-in-functional-interfaces)
     * [Combining implementations](#combining-implementations)
     * [Functional interfaces for primitives](#functional-interfaces-for-primitives)
+  * [Collections](#collections)
+    * [List](#list)
+    * [Set](#set)
+    * [Queue](#queue)
+    * [Deque](#deque)
+    * [Map](#map)
+    * [Sorting and methods](#sorting-and-methods)
 
 
 <a name="oca-ocp-course"></a>
@@ -3149,3 +3156,514 @@ public class PrimitiveFunctionalExample {
     }
 }
 ```
+
+<a name="collections"></a>
+## Collections
+
+Collections refers to a framework that provides architectures and classes to store and manipulate groups of objects. It is part of the Java Collections Framework (JCF) and is found in the `java.util` package.
+ 
+#### What is the Java Collections Framework?
+The **Java Collections Framework** is a set of interfaces, implementations (classes), and algorithms that help in managing groups of data (like lists, sets, maps, queues).
+
+| Interface    | Description                                                                                                      |
+| ------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `Collection` | The root interface; extended by other interfaces like `List`, `Set`, and `Queue`.                                |
+| `List`       | An ordered collection (e.g., `ArrayList`, `LinkedList`). Duplicates allowed.                                     |
+| `Set`        | A collection that does not allow duplicates (e.g., `HashSet`, `TreeSet`).                                        |
+| `Queue`      | Designed for holding elements before processing (e.g., `PriorityQueue`).                                         |
+| `Map`        | Stores key-value pairs (not a true child of Collection, but part of the framework) (e.g., `HashMap`, `TreeMap`). |
+
+#### Why Use Collections?
+- Efficient data manipulation
+- Reusability of data structures
+- Easy sorting/searching operations
+- Reduces development effort
+
+
+<a name="list"></a>
+### List
+
+A List is an ordered collection that:
+
+- Allows duplicate elements
+- Maintains insertion order
+- Provides indexed access (like arrays)
+
+It's part of the `java.util` package and extends the `Collection` interface.
+
+#### Common Implementations of `List`
+
+| Implementation | Characteristics                                              |
+| -------------- | ------------------------------------------------------------ |
+| `ArrayList`    | Fast random access, resizable array, slower inserts/removals |
+| `LinkedList`   | Doubly linked list, fast insert/delete, slower random access |
+| `Vector`       | Legacy class, synchronized, rarely used today                |
+
+```declarative
+import java.util.*;
+
+public class ListExample {
+    public static void main(String[] args) {
+        List<String> colors = new ArrayList<>();
+
+        // Add elements
+        colors.add("Red");
+        colors.add("Green");
+        colors.add("Blue");
+
+        // Insert at specific index
+        colors.add(1, "Yellow"); // Insert "Yellow" at index 1
+
+        // Get element
+        System.out.println(colors.get(2)); // Output: Green
+
+        // Remove element
+        colors.remove("Red"); // Removes "Red"
+        colors.remove(1);     // Removes element at index 1
+
+        // Iterate over list
+        for (String color : colors) {
+            System.out.println(color);
+        }
+    }
+}
+```
+
+#### Useful Methods of `List`
+
+| Method                                    | Description                        |
+| ----------------------------------------- | ---------------------------------- |
+| `add(E e)`                                | Adds element at the end            |
+| `add(int index, E element)`               | Inserts element at specified index |
+| `get(int index)`                          | Returns element at index           |
+| `remove(int index)` or `remove(Object o)` | Removes by index or object         |
+| `set(int index, E element)`               | Replaces element at index          |
+| `contains(Object o)`                      | Checks if element exists           |
+| `size()`                                  | Returns number of elements         |
+| `clear()`                                 | Removes all elements               |
+
+<a name="set"></a>
+### Set
+
+A `Set` is a collection that:
+
+- **Does not allow duplicate elements**
+- May or may not maintain insertion order (depending on implementation)
+- Is mainly used when uniqueness of elements is important
+
+It is part of the `java.util` package and extends the `Collection` interface.
+
+#### Common Implementations of `Set`
+
+| Implementation  | Characteristics                                         |
+| --------------- | ------------------------------------------------------- |
+| `HashSet`       | Unordered, fast, backed by a hash table                 |
+| `LinkedHashSet` | Maintains insertion order                               |
+| `TreeSet`       | Sorted in natural or custom order (uses Red-Black tree) |
+
+```declarative
+import java.util.*;
+
+public class SetExample {
+    public static void main(String[] args) {
+        Set<String> fruits = new HashSet<>();
+
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Mango");
+        fruits.add("Apple"); // Duplicate, will be ignored
+
+        System.out.println(fruits); // Order not guaranteed, no duplicates
+    }
+}
+```
+
+```declarative
+Set<String> linkedSet = new LinkedHashSet<>();
+linkedSet.add("A");
+linkedSet.add("B");
+linkedSet.add("C");
+System.out.println(linkedSet); // [A, B, C]
+```
+
+```declarative
+Set<Integer> sortedSet = new TreeSet<>();
+sortedSet.add(50);
+sortedSet.add(10);
+sortedSet.add(30);
+System.out.println(sortedSet); // [10, 30, 50]
+```
+
+#### Common Methods of `Set`
+
+| Method               | Description                               |
+| -------------------- | ----------------------------------------- |
+| `add(E e)`           | Adds element (ignored if already present) |
+| `remove(Object o)`   | Removes element if present                |
+| `contains(Object o)` | Checks if element exists                  |
+| `size()`             | Returns number of elements                |
+| `isEmpty()`          | Checks if set is empty                    |
+| `clear()`            | Removes all elements                      |
+| `iterator()`         | Returns an iterator for traversal         |
+
+#### `Set` vs `List`
+
+| Feature      | `List`             | `Set`                     |
+| ------------ | ------------------ | ------------------------- |
+| Duplicates   | Allowed            | Not allowed               |
+| Order        | Maintains order    | Depends on implementation |
+| Index access | Yes (`get(index)`) | No                        |
+| Use case     | Ordered collection | Unique collection         |
+
+
+<a name="queue"></a>
+### Queue
+
+A `Queue` is a **First-In-First-Out (FIFO)** data structure:
+
+- Elements are added at the end (tail).
+- Elements are removed from the front (head).
+
+It is part of the **Java Collections Framework** and is defined in the `java.util` package.
+
+| Interface/Class    | Description                                                |
+| ------------------ | ---------------------------------------------------------- |
+| `Queue<E>`         | Main interface for queues                                  |
+| `Deque<E>`         | Double-ended queue (add/remove from both ends)             |
+| `LinkedList<E>`    | Implements both `List` and `Queue`                         |
+| `PriorityQueue<E>` | Elements ordered by priority                               |
+| `ArrayDeque<E>`    | Efficient `Deque` implementation, faster than `LinkedList` |
+
+#### Common Methods in `Queue`
+
+| Method      | Description                                             |
+| ----------- | ------------------------------------------------------- |
+| `add(e)`    | Adds element (throws exception if full)                 |
+| `offer(e)`  | Adds element (returns false if full)                    |
+| `remove()`  | Removes and returns head (throws exception if empty)    |
+| `poll()`    | Removes and returns head (returns null if empty)        |
+| `element()` | Peeks head without removing (throws exception if empty) |
+| `peek()`    | Peeks head without removing (returns null if empty)     |
+
+
+#### Example: `LinkedList`
+```declarative
+import java.util.*;
+
+public class QueueExample {
+    public static void main(String[] args) {
+        Queue<String> queue = new LinkedList<>();
+
+        queue.offer("A");
+        queue.offer("B");
+        queue.offer("C");
+
+        System.out.println(queue); // [A, B, C]
+
+        System.out.println("Head: " + queue.peek());  // A
+        System.out.println("Removed: " + queue.poll()); // A
+        System.out.println("After Removal: " + queue);  // [B, C]
+    }
+}
+```
+
+#### Example: `PriorityQueue`
+```declarative
+import java.util.*;
+
+public class PriorityQueueExample {
+    public static void main(String[] args) {
+        Queue<Integer> pq = new PriorityQueue<>();
+
+        pq.offer(30);
+        pq.offer(10);
+        pq.offer(20);
+
+        System.out.println(pq); // Order not guaranteed when printing
+
+        while (!pq.isEmpty()) {
+            System.out.println(pq.poll()); // Prints in ascending order: 10, 20, 30
+        }
+    }
+}
+```
+
+#### `Queue` vs `List` vs `Stack`
+
+| Feature  | `Queue`         | `List`      | `Stack` (LIFO) |
+| -------- | --------------- | ----------- | -------------- |
+| Order    | FIFO            | Ordered     | LIFO           |
+| Add      | At the tail     | Anywhere    | Push on top    |
+| Remove   | From the head   | By index    | Pop from top   |
+| Use Case | Task scheduling | General use | Backtracking   |
+
+
+<a name="deque"></a>
+### Deque
+
+A `Deque` (pronounced "deck") stands for **Double-Ended Queue**. It allows:
+
+Insertion and removal of elements from both ends (front and back).
+
+It can be used both as:
+
+- A queue (FIFO)
+- A stack (LIFO)
+
+Java provides the Deque interface in the `java.util` package.
+
+| Implementation | Characteristics                                   |
+| -------------- | ------------------------------------------------- |
+| `ArrayDeque`   | Fast, resizable array, no capacity limit          |
+| `LinkedList`   | Doubly-linked list, can also be used as a `Deque` |
+
+#### Deque Interface Methods
+
+| Operation   | Front                           | Back                          |
+| ----------- | ------------------------------- | ----------------------------- |
+| Add         | `addFirst(e)` / `offerFirst(e)` | `addLast(e)` / `offerLast(e)` |
+| Remove      | `removeFirst()` / `pollFirst()` | `removeLast()` / `pollLast()` |
+| Peek (View) | `getFirst()` / `peekFirst()`    | `getLast()` / `peekLast()`    |
+
+#### Example: Using `ArrayDeque`
+
+```declarative
+import java.util.*;
+
+public class DequeExample {
+    public static void main(String[] args) {
+        Deque<String> deque = new ArrayDeque<>();
+
+        // Add to front and back
+        deque.addFirst("Front");
+        deque.addLast("Back");
+
+        System.out.println(deque); // [Front, Back]
+
+        // Peek front and back
+        System.out.println("First: " + deque.peekFirst()); // Front
+        System.out.println("Last: " + deque.peekLast());   // Back
+
+        // Remove from front and back
+        deque.pollFirst(); // Removes "Front"
+        deque.pollLast();  // Removes "Back"
+
+        System.out.println(deque); // []
+    }
+}
+```
+
+#### Example: Deque as a Stack (LIFO)
+
+```declarative
+Deque<String> stack = new ArrayDeque<>();
+stack.push("A"); // same as addFirst()
+stack.push("B");
+stack.push("C");
+
+System.out.println(stack); // [C, B, A]
+
+System.out.println(stack.pop()); // C (LIFO)
+
+```
+
+#### Example: Deque as a Stack (LIFO)
+
+```declarative
+Deque<String> queue = new ArrayDeque<>();
+queue.offer("A"); // same as addLast()
+queue.offer("B");
+queue.offer("C");
+
+System.out.println(queue); // [A, B, C]
+
+System.out.println(queue.poll()); // A (FIFO)
+```
+
+| Use Case     | Methods Used                 |
+| ------------ | ---------------------------- |
+| Stack (LIFO) | `push()`, `pop()`            |
+| Queue (FIFO) | `offerLast()`, `pollFirst()` |
+| Double Queue | `offerFirst()`, `pollLast()` |
+
+
+<a name="map"></a>
+### Map
+
+A Map is a collection that:
+
+- Stores key-value pairs
+- Keys must be unique, but values can be duplicated
+- Allows fast lookup, insertion, and deletion using the key
+
+It's part of the `java.util` package.
+
+| Implementation  | Characteristics                                            |
+| --------------- | ---------------------------------------------------------- |
+| `HashMap`       | Unordered, allows `null` keys/values, fast access          |
+| `LinkedHashMap` | Maintains **insertion order**                              |
+| `TreeMap`       | Sorted by keys (natural or custom order), **no null keys** |
+| `Hashtable`     | Legacy, synchronized, no null keys/values                  |
+
+#### Map Interface Key Methods
+
+| Method                        | Description                                       |
+| ----------------------------- | ------------------------------------------------- |
+| `put(K key, V value)`         | Adds or updates a key-value pair                  |
+| `get(Object key)`             | Returns the value for the key (or null)           |
+| `remove(Object key)`          | Removes entry by key                              |
+| `containsKey(Object key)`     | Checks if key exists                              |
+| `containsValue(Object value)` | Checks if value exists                            |
+| `keySet()`                    | Returns set of keys                               |
+| `values()`                    | Returns collection of values                      |
+| `entrySet()`                  | Returns set of key-value pairs (`Map.Entry<K,V>`) |
+| `size()`, `clear()`           | Usual collection operations                       |
+
+#### Example: Using `HashMap`
+
+```declarative
+import java.util.*;
+
+public class MapExample {
+    public static void main(String[] args) {
+        Map<String, Integer> scores = new HashMap<>();
+
+        scores.put("Alice", 85);
+        scores.put("Bob", 92);
+        scores.put("Charlie", 78);
+        scores.put("Bob", 95); // Updates Bob's score
+
+        System.out.println(scores); // {Alice=85, Bob=95, Charlie=78}
+
+        System.out.println("Alice's score: " + scores.get("Alice")); // 85
+
+        scores.remove("Charlie");
+
+        System.out.println("Keys: " + scores.keySet());   // [Alice, Bob]
+        System.out.println("Values: " + scores.values()); // [85, 95]
+    }
+}
+```
+
+#### `HashMap` vs `LinkedHashMap` vs `TreeMap`
+
+| Feature     | `HashMap`   | `LinkedHashMap` | `TreeMap`         |
+| ----------- | ----------- | --------------- | ----------------- |
+| Order       | No order    | Insertion order | Sorted by key     |
+| Null Keys   | 1 allowed   | 1 allowed       | ❌ Not allowed     |
+| Performance | Fast (O(1)) | Slightly slower | Slower (O(log n)) |
+| Use Case    | Fast access | Maintain order  | Sorted data       |
+
+#### When to Use Map?
+- You need to associate keys with values (like name → phone number)
+- Fast lookup by key
+- Need sorted or ordered mappings
+
+<a name="sorting-and-methods"></a>
+### Sorting and methods
+
+#### Sorting in Collections
+Java provides built-in methods to sort elements using the `Collections` and Arrays utility classes.
+
+#### `Collections.sort(List<T> list)`
+Sorts a List into natural order (like alphabetical for strings or ascending for numbers).
+
+```declarative
+import java.util.*;
+
+List<Integer> numbers = Arrays.asList(5, 2, 9, 1);
+Collections.sort(numbers);
+System.out.println(numbers); // [1, 2, 5, 9]
+```
+
+#### `Collections.sort(List<T> list, Comparator<T>)`
+Sort using a custom comparator:
+
+```declarative
+List<String> names = Arrays.asList("Zara", "Alex", "Bob");
+Collections.sort(names, (a, b) -> b.compareTo(a)); // Descending
+System.out.println(names); // [Zara, Bob, Alex]
+```
+
+#### `equals()` Method
+The `equals()` method is used to check logical equality between objects.
+
+####  How it works with collections:
+
+```declarative
+List<String> list1 = Arrays.asList("A", "B", "C");
+List<String> list2 = Arrays.asList("A", "B", "C");
+
+System.out.println(list1.equals(list2)); // true (same elements and order)
+```
+For collections like `Set`, order doesn't matter. For `List`, it does.
+
+#### Other Useful Methods from Collections Class
+
+| Method                                | Description                              |
+| ------------------------------------- | ---------------------------------------- |
+| `Collections.reverse(list)`           | Reverses the order of elements           |
+| `Collections.shuffle(list)`           | Randomly shuffles the list               |
+| `Collections.max(list)`               | Returns the maximum element              |
+| `Collections.min(list)`               | Returns the minimum element              |
+| `Collections.frequency(coll, obj)`    | Counts how many times an object appears  |
+| `Collections.binarySearch(list, key)` | Searches a sorted list                   |
+| `Collections.fill(list, obj)`         | Fills the list with the specified object |
+| `Collections.copy(dest, src)`         | Copies one list into another             |
+| `Collections.unmodifiableList(list)`  | Makes list read-only                     |
+
+#### Sorting with Custom Objects
+To sort a custom class, you must either:
+
+- Implement `Comparable<T>`
+- Or use a `Comparator<T>`
+
+#### Using `Comparable`
+
+```declarative
+class Student implements Comparable<Student> {
+    String name;
+    int marks;
+
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    public int compareTo(Student other) {
+        return this.marks - other.marks; // ascending
+    }
+
+    public String toString() {
+        return name + ": " + marks;
+    }
+}
+
+List<Student> students = Arrays.asList(
+    new Student("Alice", 90),
+    new Student("Bob", 80)
+);
+
+Collections.sort(students);
+System.out.println(students);
+```
+
+#### Using `Comparator`
+
+```declarative
+Collections.sort(students, Comparator.comparing(s -> s.name));
+```
+
+#### `Objects.equals()` vs `==`
+- `==` checks reference equality
+- `equals()` checks logical equality
+- `Objects.equals(a, b)` safely checks if both are equal, even if one is null.
+
+#### Summary
+
+| Category     | Useful Methods                                                     |
+| ------------ | ------------------------------------------------------------------ |
+| Sorting      | `Collections.sort()`, `Comparator`, `Comparable`                   |
+| Equality     | `.equals()`, `Objects.equals()`                                    |
+| Utilities    | `reverse()`, `shuffle()`, `max()`, `frequency()`, `binarySearch()` |
+| Immutability | `Collections.unmodifiableList()`                                   |
