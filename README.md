@@ -66,6 +66,9 @@
     * [Deque](#deque)
     * [Map](#map)
     * [Sorting and methods](#sorting-and-methods)
+  * [Exceptions](#exceptions)
+    * [Handling exceptions](#handling-exceptions)
+    * [try-with-resources](#try-with-resources)
 
 
 <a name="oca-ocp-course"></a>
@@ -3667,3 +3670,250 @@ Collections.sort(students, Comparator.comparing(s -> s.name));
 | Equality     | `.equals()`, `Objects.equals()`                                    |
 | Utilities    | `reverse()`, `shuffle()`, `max()`, `frequency()`, `binarySearch()` |
 | Immutability | `Collections.unmodifiableList()`                                   |
+
+
+<a name="exceptions"></a>
+## Exceptions
+
+In Java, exceptions are events that occur during the execution of a program that disrupt the normal flow of instructions. They represent runtime errors or other unusual conditions that a program might need to handle.
+
+#### Key Concepts:
+
+**Exception**: An object that describes an error or an unexpected behavior that occurs during program execution.
+
+**Throwable**: The superclass of all errors and exceptions in Java. It has two main subclasses:
+
+**Error**: Serious problems that applications should not try to catch (e.g., `OutOfMemoryError`, `StackOverflowError`).
+
+**Exception**: Conditions that a reasonable application might want to catch.
+
+#### `Checked` vs. `Unchecked` Exceptions:
+
+Checked Exceptions:
+
+- Must be either caught or declared in the method signature using throws.
+  - Examples: `IOException`, `SQLException`.
+
+Unchecked Exceptions:
+
+- Subclasses of `RuntimeException`.
+- Not required to be caught or declared.
+  - Examples: `NullPointerException`, `ArrayIndexOutOfBoundsException`.
+
+Common Exception Handling Keywords:
+
+`try`: Block of code that may throw an exception.
+
+`catch`: Block that handles the exception.
+
+`finally`: Block that executes after try (and catch, if present), regardless of whether an exception was thrown.
+
+`throw`: Used to explicitly throw an exception.
+
+`throws`: Declares exceptions a method might throw.
+
+```declarative
+try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero!");
+} finally {
+    System.out.println("This will always run.");
+}
+```
+
+#### Why Use Exceptions?
+- To separate error-handling code from regular code.
+- To handle different types of errors in a structured way.
+- To make code more robust and maintainable.
+
+<a name="handling-exceptions"></a>
+### Handling exceptions
+
+Handling exceptions in Java involves using the `try-catch-finally` mechanism or declaring exceptions with throws. Here's how you can do it step by step:
+
+#### Using try-catch
+Use this when you want to catch and handle the exception within the method.
+
+Example:
+
+```declarative
+public class Example {
+    public static void main(String[] args) {
+        try {
+            int number = 10 / 0;  // This will throw ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+```
+
+#### Using finally
+Use finally to run code no matter what happens, usually for cleanup (e.g., closing files or releasing resources).
+
+Example:
+
+```declarative
+try {
+    String str = null;
+    System.out.println(str.length());
+} catch (NullPointerException e) {
+    System.out.println("Caught a null pointer!");
+} finally {
+    System.out.println("This block always executes.");
+}
+```
+
+#### Using throws
+If a method might throw a checked exception, but you want to let the caller handle it, use throws.
+
+Example:
+
+```declarative
+import java.io.*;
+
+public class Example {
+    public static void readFile(String filename) throws IOException {
+        FileReader file = new FileReader(filename);
+    }
+
+    public static void main(String[] args) {
+        try {
+            readFile("data.txt");
+        } catch (IOException e) {
+            System.out.println("File error: " + e.getMessage());
+        }
+    }
+}
+```
+
+#### Multiple catch Blocks
+You can catch different types of exceptions separately.
+
+```declarative
+try {
+    int[] arr = new int[5];
+    System.out.println(arr[10]);
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Array index issue: " + e.getMessage());
+} catch (Exception e) {
+    System.out.println("General exception: " + e.getMessage());
+}
+```
+
+#### Multi-catch (Java 7+)
+You can catch multiple exception types in a single block if they have similar handling.
+
+```declarative
+try {
+    // Some code that might throw either
+    // IOException or SQLException
+} catch (IOException | SQLException e) {
+    System.out.println("Caught: " + e);
+}
+```
+
+#### Best Practices
+- Catch specific exceptions first.
+- Avoid catching `Exception` or `Throwable` unless absolutely necessary.
+- Use `finally` or `try-with-resources` to handle resource cleanup.
+- Log or report exceptions when needed.
+- Don’t suppress exceptions silently.
+
+
+<a name="try-with-resources"></a>
+### try-with-resources
+
+In Java, `try-with-resources` is a special kind of try statement introduced in Java 7 that simplifies the handling of resources (like files, database connections, sockets, etc.) that need to be closed after use.
+
+#### What is try-with-resources?
+It's a try block that automatically closes resources that implement the AutoCloseable or Closeable interface—no need for a finally block to manually close them.
+
+#### Basic Syntax:
+
+```declarative
+try (ResourceType resource = new ResourceType()) {
+    // Use the resource
+} catch (Exception e) {
+    // Handle exception
+}
+```
+After the `try` block, Java automatically calls `close()` on the resource, even if an exception is thrown.
+
+#### Example with FileReader
+Traditional Way:
+
+```declarative
+BufferedReader reader = null;
+try {
+    reader = new BufferedReader(new FileReader("file.txt"));
+    System.out.println(reader.readLine());
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    try {
+        if (reader != null) reader.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+With try-with-resources:
+
+```declarative
+try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
+    System.out.println(reader.readLine());
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+Cleaner and less error-prone!
+
+#### Multiple Resources
+You can manage multiple resources in one try-with-resources statement by separating them with semicolons:
+
+```declarative
+try (
+    FileInputStream fis = new FileInputStream("input.txt");
+    FileOutputStream fos = new FileOutputStream("output.txt")
+) {
+    // Use fis and fos
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+#### Custom Resource (implements AutoCloseable)
+You can create your own class that works with try-with-resources:
+
+```declarative
+class MyResource implements AutoCloseable {
+    public void doSomething() {
+        System.out.println("Doing something...");
+    }
+
+    public void close() {
+        System.out.println("Resource closed.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        try (MyResource res = new MyResource()) {
+            res.doSomething();
+        }
+    }
+}
+```
+
+```declarative
+Doing something...
+Resource closed.
+```
+
+#### Summary
+- `try-with-resources` is for managing automatic closing of resources.
+- Resources must implement AutoCloseable or Closeable.
+- It's safer, more concise, and less error-prone than manual `try-catch-finally`.
