@@ -69,6 +69,7 @@
   * [Exceptions](#exceptions)
     * [Handling exceptions](#handling-exceptions)
     * [try-with-resources](#try-with-resources)
+  * [Math API](#math-api)
 
 
 <a name="oca-ocp-course"></a>
@@ -3917,3 +3918,43 @@ Resource closed.
 - `try-with-resources` is for managing automatic closing of resources.
 - Resources must implement AutoCloseable or Closeable.
 - It's safer, more concise, and less error-prone than manual `try-catch-finally`.
+
+<a name="math-api"></a>
+## Math API
+
+The `Math` class in Java is a final class in `java.lang` package and provides methods for performing basic numeric operations like exponentiation, logarithms, roots, trigonometry, and more.
+
+#### Key Characteristics
+
+- All methods are static – you don’t need to create an object of `Math`.
+- It deals primarily with double and float types.
+- It uses native libraries for performance.
+
+#### Commonly Used Methods in `Math` API
+
+| Method                                    | Description                                     | Example                     |
+| ----------------------------------------- | ----------------------------------------------- | --------------------------- |
+| `Math.abs(x)`                             | Absolute value                                  | `Math.abs(-5)` → `5`        |
+| `Math.max(a, b)`                          | Returns the larger of two values                | `Math.max(3, 9)` → `9`      |
+| `Math.min(a, b)`                          | Returns the smaller                             | `Math.min(3, 9)` → `3`      |
+| `Math.pow(a, b)`                          | Raises a to the power b                         | `Math.pow(2, 3)` → `8.0`    |
+| `Math.sqrt(x)`                            | Square root                                     | `Math.sqrt(16)` → `4.0`     |
+| `Math.cbrt(x)`                            | Cube root                                       | `Math.cbrt(27)` → `3.0`     |
+| `Math.round(x)`                           | Rounds to nearest whole number                  | `Math.round(5.6)` → `6`     |
+| `Math.floor(x)`                           | Rounds **down**                                 | `Math.floor(3.9)` → `3.0`   |
+| `Math.ceil(x)`                            | Rounds **up**                                   | `Math.ceil(3.1)` → `4.0`    |
+| `Math.random()`                           | Returns a random double between `0.0` and `1.0` | `Math.random()`             |
+| `Math.toRadians(deg)`                     | Degrees → Radians                               | `Math.toRadians(180)` → `π` |
+| `Math.toDegrees(rad)`                     | Radians → Degrees                               | `Math.toDegrees(π)` → `180` |
+| `Math.sin(rad)` / `cos(rad)` / `tan(rad)` | Trig functions                                  |                             |
+| `Math.log(x)`                             | Natural log (base e)                            | `Math.log(10)`              |
+| `Math.log10(x)`                           | Log base 10                                     | `Math.log10(1000)` → `3`    |
+| `Math.exp(x)`                             | e^x                                             | `Math.exp(1)` ≈ `2.718`     |
+
+#### Tips for Java Certifications
+
+- Watch out for types – `int`, `double`, `float` – know what methods return.
+- Practice random number generation questions.
+- Know rounding behavior: `round()`, `floor()`, `ceil()`.
+- Understand truncation vs rounding – cast vs `round()`.
+- For trigonometric methods, inputs are in radians, not degrees.
